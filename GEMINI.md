@@ -143,6 +143,7 @@ AIは、複数のIssueを同時に処理しません。必ず一つのIssueが�
     *   Pull Requestをマージします。
     *   作業ブランチを削除します。
     *   関連するIssueが自動でクローズされたことを確認します。（PRの `Closes #12` により自動化）
+    *   クローズされたIssueの `status: review` ラベルを削除し、`status: done` ラベルを付与します。
 
 ### 4.3. テストワークフロー
 *   **テスト実行コマンド:** (今後定義)
@@ -160,6 +161,7 @@ IssueやPRが現在どの開発段階にあるかを示します。
 | `status: planning` | `#FBCA04` | AIが実装計画を策定中の状態 |
 | `status: implementing` | `#1D76DB` | AIが実装作業中の状態 |
 | `status: review` | `#8E44AD` | Pull Requestがレビュー待ちの状態 |
+| `status: done` | `#0E8A16` | Issueの対応が完了し、マージ済みの状態 |
 
 #### **種別ラベル (Type)**
 IssueやPRがどのような種類のタスクであるかを示します。
