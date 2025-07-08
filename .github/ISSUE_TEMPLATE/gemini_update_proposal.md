@@ -2,7 +2,6 @@
 name: GEMINI.md 改善提案
 about: GEMINI.mdの改善や変更を提案します
 title: "[GEMINI.md] "
-labels: gemini.md
 assignees: ''
 
 ---
