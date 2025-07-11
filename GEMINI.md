@@ -19,7 +19,7 @@
 *   **YAML設定ブロックの導入:**
     *   **目的:** AIの挙動を直接制御する、厳密な「設定値」（例: ラベル定義、命名規則）を記述するために、Markdown内にYAMLコードブロックを導入します。
     *   **役割分担:** 自然言語で記述するMarkdownは「なぜそうするのか（Why）」という戦略や思想を、YAMLは「どう動くべきか（How）」という具体的な設定値を担当し、両者で役割を分離します。
-    *   **適用範囲:** まずは`4.4. ラベル管理`から適用を開始し、将来的には他の規約にも展開を検討します。
+    *   **適用範囲:** AIが機械的に解釈・実行する方が望ましい設定項目（ラベル定義、命名規則など）は、積極的にYAMLでの記述を適用します。
 
 ### 1.3. 更新プロセス
 本ドキュメントの変更は、品質を維持し、意図しない変更を防ぐため、以下のプロセスを必須とします。
@@ -209,29 +209,40 @@ Issueは、以下の原則に基づき、一つのPull Requestで完了できる
     *   **CIでの実行（推奨）:** Pull Requestが作成・更新されるたびに、すべてのテストが自動的に実行される体制を推奨します。CI環境が利用可能な場合、AIは積極的にその設定と活用を試みます。
 
 ### 4.4. ラベル管理
-AIは、IssueやPull Requestの状況と種類を明確にするため、以下のラベルを使用します。
-AIは、ラベルを付与する際に該当のラベルが存在しない場合、以下の定義に従って自動でラベルを作成した上で付与します。
+AIは、IssueやPull Requestの状況と種類を明確にするため、以下のYAMLで定義されたラベルを使用します。AIは、ラベルを付与する際に該当のラベルが存在しない場合、この定義に従って自動でラベルを作成した上で付与します。
 
-#### **状態ラベル (Status)**
-IssueやPRが現在どの開発段階にあるかを示します。
-
-| ラベル名 | 色 | 説明 |
-| :--- | :--- | :--- |
-| `status: planning` | `#FBCA04` | AIが実装計画を策定中の状態 |
-| `status: implementing` | `#1D76DB` | AIが実装作業中の状態 |
-| `status: review` | `#8E44AD` | Pull Requestがレビュー待ちの状態 |
-| `status: done` | `#0E8A16` | Issue��対応が完了し、マージ済みの状態 |
-
-#### **種別ラベル (Type)**
-IssueやPRがどのような種類のタスクであるかを示します。
-
-| ラベル名 | 色 | 説明 |
-| :--- | :--- | :--- |
-| `type: bug` | `#D73A4A` | 既存機能の不具合 |
-| `type: feature` | `#0E8A16` | 新しい機能の追加 |
-| `type: documentation` | `#0075CA` | ドキュメントの作成・更新 |
-| `type: refactor` | `#A2EEEF` | 外部的な振る舞いを変更しないコード改善 |
-| `type: chore` | `#FFFFFF` | ビルドプロセスや補助ツールの変更など、上記以外のタスク |
+```yaml
+labels:
+  status:
+    - name: "status: planning"
+      color: "FBCA04"
+      description: "AIが実装計画を策定中の状態"
+    - name: "status: implementing"
+      color: "1D76DB"
+      description: "AIが実装作業中の状態"
+    - name: "status: review"
+      color: "8E44AD"
+      description: "Pull Requestがレビュー待ちの状態"
+    - name: "status: done"
+      color: "0E8A16"
+      description: "Issueの対応が完了し、マージ済みの状態"
+  type:
+    - name: "type: bug"
+      color: "D73A4A"
+      description: "既存機能の不具合"
+    - name: "type: feature"
+      color: "0E8A16"
+      description: "新しい機能の追加"
+    - name: "type: documentation"
+      color: "0075CA"
+      description: "ドキュメントの作成・更新"
+    - name: "type: refactor"
+      color: "A2EEEF"
+      description: "外部的な振る舞いを変更しないコード改善"
+    - name: "type: chore"
+      color: "FFFFFF"
+      description: "ビルドプロセスや補助ツールの変更など、上記以外のタスク"
+```
 
 ## 5. ドキュメント戦略とワークフロー
 AIがプロジェクトの仕様や設計思想を正確に理解し、開発とドキュメントの整合性を維持するためのワークフローを定義します。
