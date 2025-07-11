@@ -1,294 +1,296 @@
-# GEMINI.md: AI駆動開発のための指示書
+# GEMINI.md: Instruction Manual for AI-Driven Development
 
-このドキュメントは、AIアシスタント（Gemini）が本プロジェクトにおいて開発タスクを遂行するための指示書です。一貫性、品質、効率性を担保するため、以下のガイドラインに厳密に従ってください。
+This document provides instructions for the AI assistant (Gemini) to perform development tasks in this project. To ensure consistency, quality, and efficiency, please adhere strictly to the following guidelines.
 
-## 1. 本ドキュメント(GEMINI.md)の運用指針
+## 1. Guiding Principles for this Document (GEMINI.md)
 
-### 1.1. 目的
-このドキュメントは、AIが自律的に開発を進めるための「思考と行動の起点」です。AIへの指示はすべてここに集約され、プロジェクトの憲法として機能します。
+### 1.1. Purpose
+This document is the "starting point for thought and action" for the AI to autonomously advance development. All instructions for the AI are consolidated here, functioning as the project's constitution.
 
-### 1.2. 構成と記述ルール
-本ドキュメントの肥大化を防ぎ、可読性とメンテナンス性を維持するため、以下のルールに従って記述します。
+### 1.2. Structure and Writing Rules
+To prevent this document from becoming bloated and to maintain readability and maintainability, it is written according to the following rules.
 
-*   **戦略とワークフローの明確な分離:**
-    *   **戦略セクション (3章):** プロジェクトが **「何を (What)」** 目指し、 **「なぜ (Why)」** そうするのかという **方針** のみを記述します。長期的で普遍的な指針が対象です。
-    *   **ワークフローセクション (4章):** 戦略を実現するために **「どのように (How)」** 作業するのかという、**具体的���再現可能な手順** のみを記述します。AIが直接実行・参照するコマンドや規約が対象です。
-*   **詳細の外部化:**
-    *   特定の技術に関する詳細なセットアップ手順、設計思想、長文の規約などは、`docs/`ディレクトリ配下に別のMarkdownファイルとして作成します。
-    *   本ドキュメントには、その外部ファイルへの参照（リンク）を記述するに留め、本文書はAIの行動を規定する「指示」に特化させます。
-*   **YAML設定ブロックの導入:**
-    *   **目的:** AIの挙動を直接制御する、厳密な「設定値」（例: ラベル定義、命名規則）を記述するために、Markdown内にYAMLコードブロックを導入します。
-    *   **役割分担:** 自然言語で記述するMarkdownは「なぜそうするのか（Why）」という戦略や思想を、YAMLは「どう動くべきか（How）」という具体的な設定値を担当し、両者で役割を分離します。
-    *   **適用範囲:** AIが機械的に解釈・実行する方が望ましい設定項目（ラベル定義、命名規則など）は、積極的にYAMLでの記述を適用します。
+*   **Clear Separation of Strategy and Workflow:**
+    *   **Strategy Section (Chapter 3):** Describes only the **policy** of **"What"** the project aims for and **"Why."** This section covers long-term, universal guidelines.
+    *   **Workflow Section (Chapter 4):** Describes only the **"How"**—the **concrete, reproducible procedures**—to realize the strategy. This section covers commands and conventions that the AI will directly execute and reference.
+*   **Externalization of Details:**
+    *   Detailed setup procedures for specific technologies, design philosophies, and lengthy conventions are created as separate Markdown files under the `docs/` directory.
+    *   This document only contains references (links) to those external files, keeping this document focused on "instructions" that define the AI's behavior.
+*   **Introduction of YAML Configuration Blocks:**
+    *   **Purpose:** To describe strict "settings" that directly control the AI's behavior (e.g., label definitions, naming conventions), YAML code blocks are introduced within the Markdown.
+    *   **Role Division:** The natural language Markdown is responsible for the "Why" (strategy and philosophy), while YAML is responsible for the "How" (concrete settings), separating their roles.
+    *   **Scope of Application:** YAML is actively used for settings that are better for the AI to interpret and execute mechanically (e.g., label definitions, naming conventions).
 
-### 1.3. 更新プロセス
-本ドキュメントの変更は、品質を維持し、意図しない変更を防ぐため、以下のプロセスを必須とします。
-1.  GitHub Issueで変更を提案します。
-2.  提案が承認された後、AIがこのドキュメントを更新するPull Requestを作成します。
-3.  Pull Requestがレビューされ、マージされることで変更が確定します。
+### 1.3. Update Process
+Changes to this document require the following process to maintain quality and prevent unintended modifications.
+1.  Propose changes in a GitHub Issue.
+2.  After the proposal is approved, the AI creates a Pull Request to update this document.
+3.  The change is finalized when the Pull Request is reviewed and merged.
 
-### 1.4. 記述スタイルガイド
-本ドキュメントの可読性を維持するため、以下の記述スタイルに従います。
+### 1.4. Style Guide
+To maintain the readability of this document, the following writing style is followed.
 
-*   **箇条書き（リスト）の使用:**
-    *   **目的:** 手順、チェックリスト、並列な選択肢など、順序や階層を持つ情報を記述する場合に使用します。
-    *   **例:** 開発プロセスのステップ���セルフレビューの観点。
+*   **Use of Lists:**
+    *   **Purpose:** Used to describe information with order or hierarchy, such as procedures, checklists, and parallel choices.
+    *   **Example:** Steps in the development process, perspectives for self-review.
 
-*   **表（テーブル）の使用:**
-    *   **目的:** 複数の項目を、共通の属性で比較・対照する場合に使用します。情報の対応関係を明確に示したい場合に最適です。
-    *   **例:** ラベル一覧とそれぞれの役割、コマンドのオプションと説明。
+*   **Use of Tables:**
+    *   **Purpose:** Used to compare and contrast multiple items with common attributes. Ideal for clearly showing the correspondence of information.
+    *   **Example:** A list of labels and their roles, command options and their descriptions.
 
-*   **文体:** AIへの指示であることが明確になるよう、敬体（です・ます調）ではなく、常体（だ・である調）または命令形で記述します。
+*   **Writing Style:** To clarify that these are instructions for the AI, use a direct or imperative style rather than a polite (desu/masu) style.
 
 ---
 
-## 2. AI連携における基本原則
-*   **Issue駆動の徹底:** 全ての開発・修正作業は、必ずGitHub Issueを起点とします。ユーザーからの指示がIssueに基づかない場合、AIは作業に着手せず、まず対応するIssueの作成をユーザーに依頼または提案します。
-*   **目的志向:** Issueに書かれた表面的な指示だけでなく、その背後にあるユーザーの最終的な目的を理解し、目標達成のために能動的に行動してください。
-*   **規約の絶対遵守と自己検証:** `GEMINI.md`は、AIの思考と行動を規定する唯一の憲法であり、そのルールは絶対である。ファイル変更、コマンド実行、Issue/PR操作など、あらゆる行動の前に、その行動が`GEMINI.md`のワークフローと完全に一致しているか自己検証を義務付ける。少しでも矛盾や不確実性がある場合は、決して実行せず、まずユーザーに確認を求めること。
-*   **透明性の確保:** ファイル変更やコマンド実行など、AIが行った操作はすべて明確に記録・報告してください。
-*   **段階的な実行:** 大きな変更は小さなステップに分割し、重要な判断が必要な場面では必ずユーザーに確認を求めてください。
+## 2. Fundamental Principles for AI Collaboration
 
-## 3. プロジェクト戦略
-*(このセクションでは、プロジェクトが目指す「方針」のみを記述します)*
+*   **Principle of Communication Language:** The primary language for all documentation (`GEMINI.md`, `docs/`) is English, to ensure maximum performance and global collaboration. However, communication with the user (e.g., comments on Issues and Pull Requests) should be conducted in the language the user uses. The AI must adapt its response language to match the user's language in conversational contexts.
+*   **Issue-Driven Development:** All development and modification work must originate from a GitHub Issue. If a user's instruction is not based on an Issue, the AI will not start the work and will first request or propose the creation of a corresponding Issue.
+*   **Goal-Oriented Action:** Understand not just the superficial instructions in an Issue, but the user's ultimate goal behind them, and act proactively to achieve that goal.
+*   **Absolute Adherence to and Self-Verification of Rules:** `GEMINI.md` is the sole constitution governing the AI's thoughts and actions, and its rules are absolute. Before any action—file modification, command execution, Issue/PR operations, etc.—the AI is obligated to self-verify that the action is in complete agreement with the `GEMINI.md` workflow. If there is any contradiction or uncertainty, it must never execute the action and must first seek confirmation from the user.
+*   **Ensuring Transparency:** All operations performed by the AI, such as file changes and command executions, must be clearly recorded and reported.
+*   **Step-by-Step Execution:** Large changes should be broken down into small steps, and the user's confirmation should be sought at critical decision points.
 
-*   **開発戦略:** 
-    *   **Issue駆動開発 (IDD) の徹底:** すべての開発タスクはGitHub Issueを起点とします。Issueで目的、仕様、計画を明確に合意形成してから実装に着手することで、手戻りを防ぎ、透明性を確保します。
-    *   **テスト駆動開発 (TDD) の徹底:** 新機能追加やリファクタリングの際は、いかなる場合もまずテストケースの作成または更新から着手することを**義務**とします。
-        *   **テストが存在しない場合:** 変更対象の機能に対するテストがまだ存在しない場合は、まず新しいテストを作成します。
-        *   **テストが既に存在する場合:** 既存のテストをレビューし、今回の変更をカバーするために必要な修正（テストケースの追加、アサーションの変更など）を加えます。
-    *   この「テストファースト」のアプローチを徹底することで、意図しない副作用（リグレッション）を防ぎ、コードの品質と保守性を最優先事項として扱います。
-    *   **プロアクティブな要件定義とIssue分解:** ユーザーの要求が曖昧、大規模、または複数の解釈が可能である場合、AIは実装に着手する前に、対話を通じて要件を明確化します。合意形成された内容はドキュメントやIssueに記録し、適切な粒度のIssue群に分解してから開発を進めます。これにより、認識の齟齬を防ぎ、開発の方向性を正確に定めます。
-*   **ドキュメント戦略:**
-    *   **目的:** ドキュメントは、単なる成果物ではなく、プロジェクトの知識を体系化し、未来の自分たちを含むすべての関係者のための「思考の補助線」として機能することを目指します。知識の属人化を防ぎ、新規参画者の学習コストを下げ、円滑な意思決定を促進します。
-    *   **原則: Documentation as Code (DaC):** コードと同じように、ドキュメントもバージョン管理され、レビュープロセスを経て、継続的に更新されるべきものとして扱います。コードの変更とドキュメントの変更は、常に一体として扱います。
-*   **GitHub運用戦略:**
-    *   **基本戦略: GitHub Flowの採用:** `main`ブランチを常にデプロイ可能な状態に保ち、機能追加や修正はすべてフィーチャーブランチで行う「GitHub Flow」を基本戦略とします。
-    *   **採用理由:** この戦略は、運用ルールがシンプルで、AIがタスクを遂行する上でコンテキストの消費を抑え、セッションが中断された場合でも状態の把握が容易であるためです。複数の永続的なブランチ（例: `develop`）を管理する複雑さを回避し、AIが一貫性を保ち、安定して動作することを最優先します。
-    *   **ブランチ戦略:**
-        * `main`ブランチ: 本番環境にデプロイされる、最も安定したブランチです。直接のコミットは禁止し、Pull Requestのマージによってのみ更新されます。
-        * フィーチャーブランチ: 各Issueに対応するブランチです。`main`ブランチから作成し、作業完了後に`main`ブランチへのPull Requestを作成します。
-    *   **ブランチのライフサイクル:**
-        * **作成:** Issueの実装に着手するタイミングで、`main`ブランチから作成します。
-        * **命名規則:** `4.2. Issue駆動開発プロセス`で定義された `{issue番号}-{issueのタイトルをケバブケースにしたもの}` に従います。
-        * **削除:** Pull Requestが`main`ブランチにマージされた後、速やかに削除します。
+## 3. Project Strategy
+*(This section describes only the "policy" that the project aims for)*
 
-## 4. 開発ワークフロー
-*(このセクションで��、戦略を実行するための「具体的で再現可能な手順」のみを記述します。AIはこのワークフローに厳密に従って、自律的に開発を遂行します)*
+*   **Development Strategy:**
+    *   **Thorough Issue-Driven Development (IDD):** All development tasks start from a GitHub Issue. By clearly agreeing on the purpose, specifications, and plan in the Issue before starting implementation, we prevent rework and ensure transparency.
+    *   **Thorough Test-Driven Development (TDD):** When adding new features or refactoring, it is **mandatory** to start by creating or updating test cases under all circumstances.
+        *   **If tests do not exist:** If tests for the feature to be changed do not yet exist, create new tests first.
+        *   **If tests already exist:** Review the existing tests and make the necessary modifications (adding test cases, changing assertions, etc.) to cover the current changes.
+    *   By thoroughly implementing this "test-first" approach, we prevent unintended side effects (regressions) and treat code quality and maintainability as top priorities.
+    *   **Proactive Requirement Definition and Issue Decomposition:** If a user's request is ambiguous, large-scale, or open to multiple interpretations, the AI will clarify the requirements through dialogue before starting implementation. The agreed-upon content will be recorded in documents or Issues, and development will proceed after decomposing it into a group of appropriately sized Issues. This prevents misunderstandings and accurately sets the direction of development.
+*   **Documentation Strategy:**
+    *   **Purpose:** Documentation is not just a deliverable, but aims to function as a "thinking aid" for all stakeholders, including our future selves, by systematizing project knowledge. It prevents knowledge from being siloed, lowers the learning curve for new participants, and facilitates smooth decision-making.
+    *   **Principle: Documentation as Code (DaC):** Like code, documentation should be version-controlled, go through a review process, and be continuously updated. Changes to code and documentation are always treated as a single unit.
+*   **GitHub Operational Strategy:**
+    *   **Basic Strategy: Adoption of GitHub Flow:** The basic strategy is "GitHub Flow," where the `main` branch is always kept in a deployable state, and all feature additions and fixes are done in feature branches.
+    *   **Reason for Adoption:** This strategy has simple operational rules, reduces the context the AI needs to consume to perform tasks, and makes it easy to grasp the state even if a session is interrupted. It avoids the complexity of managing multiple persistent branches (e.g., `develop`) and prioritizes the AI's ability to maintain consistency and operate stably.
+    *   **Branching Strategy:**
+        * `main` branch: The most stable branch, deployed to the production environment. Direct commits are prohibited; it is updated only by merging Pull Requests.
+        * Feature branches: Branches corresponding to each Issue. They are created from the `main` branch, and a Pull Request to the `main` branch is created after the work is completed.
+    *   **Branch Lifecycle:**
+        * **Creation:** Created from the `main` branch when starting to implement an Issue.
+        * **Naming Convention:** Follows the `{issue_number}-{kebab-case-issue-title}` format defined in `4.2. Issue-Driven Development Process`.
+        * **Deletion:** Deleted promptly after the Pull Request is merged into the `main` branch.
 
-### 4.1. 基本原則：シングルタスクの徹底
-AIは、複数のIssueを同時に処理しません。必ず一つのIssueが完了（マージ）してから、次のIssueに着手します。これにより、ブランチのコンフリクトや作業の混乱を防ぎます。
+## 4. Development Workflow
+*(This section describes only the "concrete, reproducible procedures" for executing the strategy. The AI will strictly follow this workflow to autonomously carry out development)*
 
-### 4.2. Issue駆動開発プロセス
-以下は、一つのIssueが起票されてからクローズされるまでの一連のプロセスです。AIとユーザーはこのプロセスに従って連携します。
+### 4.1. Basic Principle: Single-Tasking
+The AI does not handle multiple Issues simultaneously. It must complete (merge) one Issue before starting the next. This prevents branch conflicts and work confusion.
 
-#### **原則: GitHubインタラクションにおける一時ファイルの利用**
-Issueの作成やコメント、Pull Requestの作成やレビューコメントなど、GitHub上で複数行のテキストを送信する操作を行う際は、コマンドライン引数における予期せぬエラー（特に`gemini cli`でのクォーテーションの扱い）を回避するため、必ず一時ファイルに本文を記述し、`--body-file`オプションを利用します。
+### 4.2. Issue-Driven Development Process
+The following is the series of processes from when an Issue is created until it is closed. The AI and the user will collaborate according to this process.
 
-#### **原則: 承認の記録**
-ユーザーによる承認がCLIプロンプト上で行われた場合、AIは「CLI上でユーザーの承認を確認しました」という内容のコメントを、対応するGitHub IssueまたはPull Requestに投稿し、承認の事実を記録として残します。
+#### **Principle: Use of Temporary Files for GitHub Interactions**
+When performing operations that send multi-line text on GitHub, such as creating Issues or comments, or creating Pull Requests or review comments, always write the body text to a temporary file and use the `--body-file` option to avoid unexpected errors in command-line arguments (especially with quotation handling in `gemini cli`).
 
-#### **Issueの粒度**
-Issueは、以下の原則に基づき、一つのPull Requestで完了できる、具体的で明確なタスク単位で作成します。
+#### **Principle: Recording Approval**
+If user approval is given in the CLI prompt, the AI will post a comment stating "User approval confirmed on the CLI" to the corresponding GitHub Issue or Pull Request to leave a record of the approval.
 
-*   **単一責任の原則:** 一つのIssueは、一つの関心事（機能追加、バグ修正、リファクタリングなど）に集中します。複数の目的を一つのIssueに混在させません。
-*   **明確な完了条件:** Issueには、何が達成されればそのタスクが完了と見なされるのか、具体的な完了条件を記述します。
-*   **適切なスコープ:**
-    *   **大きすぎるIssueの分割:** 実装に1日以上かかると想定される、または複数のコンポーネントにまたがる大規模な機能開発は、より小さな複数のIssueに分割します。AIは、`プロアクティブな要件定義とIssue分解`戦略に基づき、大規模なIssueの分割を提案します。
-    *   **小さすぎるIssueの統合:** 複数のIssueが密接に関連し、まとめて対応する方が効率的な場合は、それらを一つのIssueに統合することを検討します。
+#### **Issue Granularity**
+Issues are created in concrete, clear task units that can be completed in a single Pull Request, based on the following principles.
 
-#### **ステップ1: Issueの受付と担当設定**
-1.  **トリガー:** ��ーザーまたはAIが新しいIssueを作成します。
-2.  **AIの対応:**
-    *   AIは新しく作成されたIssueを検知し、自身をそのIssueの担当者（Assignee）として設定します。
-    *   Issueの内容を分析し、`4.4. ラベル管理`で定義された**状態ラベル**と**種別ラベル**の中から、最も適切と思われるラベルを付与します。
-        *   **状態ラベル:** `status: planning`
-        *   **種別ラベル:** `type: feature` や `type: bug` などから1つを選択
+*   **Single Responsibility Principle:** One Issue focuses on one concern (feature addition, bug fix, refactoring, etc.). Do not mix multiple purposes in one Issue.
+*   **Clear Completion Criteria:** The Issue should describe the specific conditions under which the task is considered complete.
+*   **Appropriate Scope:**
+    *   **Decomposition of Large Issues:** Large-scale feature development that is expected to take more than a day or spans multiple components should be broken down into smaller, multiple Issues. The AI will propose the decomposition of large Issues based on the `Proactive Requirement Definition and Issue Decomposition` strategy.
+    *   **Consolidation of Small Issues:** If multiple Issues are closely related and it is more efficient to handle them together, consider consolidating them into a single Issue.
 
-#### **ステップ2: 実装計画の策定と合意形成**
-1.  **トリガー:** Issueに `status: planning` ラベルが付与される。
-2.  **AIの対応:**
-    *   **コンテキストの再確認:** 計画策定を開始する前に、まずIssueの最新の記述、関連するPull Request、関連コメント、そして`GEMINI.md`や`docs/`配下を含む関連ドキュメント全体を再読み込みし、常に最新のコンテキストを把握します。
-    *   Issueの内容、関連コメント、リンク先のドキュメントを精読し、表面的な要求だけでなく、その背後にある**目的**と**解決すべき根本的な課題**を完全に理解します。
-    *   目的が不明確、または複数の解釈が可能な場合は、ユーザーに質問を投げかけ、意図を明確化します。
-    *   複数の実装アプローチが考えられる場合は、それぞれのメリット・デメリットを簡潔に提示し、ユーザーに最適な選択を促します。
-    *   上記の分析に基づき、**3章で定義されたドキュメント戦略**に照らして、実装や仕様変更に伴って更新が必要なドキュメントとコードを特定します。
-    *   実現に必要なタスク（コード変更、ドキュメント更新など）を分解し、変更予定のファイルをすべてリストアップした、具体的な実装計画を立てます。
-    *   以下のフォーマットで、実装計画をIssueにコメントした後、「GitHub Issue上で計画をレビューし、『承認』とコメントするか、このCLI上で承認を伝えてください。**承認後、次のステップに進むよう、私に指示をお願いします。**」とユーザーに伝え、応答を待ちます。
+#### **Step 1: Issue Reception and Assignment**
+1.  **Trigger:** A user or the AI creates a new Issue.
+2.  **AI's Response:**
+    *   The AI detects the newly created Issue and sets itself as the assignee for that Issue.
+    *   It analyzes the content of the Issue and applies the most appropriate **status label** and **type label** from those defined in `4.4. Label Management`.
+        *   **Status Label:** `status: planning`
+        *   **Type Label:** Select one from `type: feature`, `type: bug`, etc.
+
+#### **Step 2: Implementation Planning and Agreement**
+1.  **Trigger:** The `status: planning` label is applied to the Issue.
+2.  **AI's Response:**
+    *   **Reconfirm Context:** Before starting to create a plan, first reload the latest description of the Issue, related Pull Requests, related comments, and all relevant documents, including `GEMINI.md` and those under `docs/`, to always grasp the latest context.
+    *   Thoroughly read the Issue content, related comments, and linked documents to fully understand not only the superficial request but also the underlying **purpose** and **fundamental problem to be solved**.
+    *   If the purpose is unclear or open to multiple interpretations, ask the user questions to clarify the intent.
+    *   If multiple implementation approaches are possible, concisely present the pros and cons of each and prompt the user to choose the best option.
+    *   Based on the above analysis, and in light of the **documentation strategy defined in Chapter 3**, identify the documents and code that need to be updated along with the implementation or specification changes.
+    *   Break down the necessary tasks (code changes, document updates, etc.) and create a concrete implementation plan that lists all files to be changed.
+    *   After commenting on the Issue with the implementation plan in the following format, tell the user, "Please review the plan on the GitHub Issue and comment with 'Approve', or convey your approval on this CLI. **After approval, please instruct me to proceed to the next step.**" and wait for a response.
         ```markdown
-        ### 実装計画のご提案
+        ### Implementation Proposal
 
-        このIssueを解決するため、以下の計画で実装を進めます。
+        To resolve this Issue, I will proceed with the implementation according to the following plan.
 
-        **変更対象ファイル:**
+        **Files to be changed:**
         - `path/to/file1.ext`
         - `path/to/file2.ext`
 
-        #### 1. **プロジェクト目的への貢献**
-        - (このセクションでは、提案する変更がプロジェク���全体の目標にどのように貢献するのかを簡潔に説明します)
+        #### 1. **Contribution to Project Goals**
+        - (In this section, briefly explain how the proposed changes contribute to the overall goals of the project)
 
-        #### 2. **変更の概要**
-        - (このセクションでは、変更の全体像と目的を簡潔に説明します)
+        #### 2. **Overview of Changes**
+        - (In this section, briefly explain the overall picture and purpose of the changes)
 
-        #### 3. **ファイルごとの具体的な作業内容**
-        - `path/to/file1.ext`: (このファイルに対する具体的な変更内容を記述します)
-        - `path/to/file2.ext`: (このファイルに対する具体的な変更内容を記述します)
+        #### 3. **Specific Work Content for Each File**
+        - `path/to/file1.ext`: (Describe the specific changes for this file)
+        - `path/to/file2.ext`: (Describe the specific changes for this file)
 
         ---
-        ご承認いただける場合は、このコメントに「承認」と返信してください。
+        If you approve, please reply to this comment with "Approve".
         ```
-3.  **ユーザーの対応:**
-    *   計画をレビューし、問題がなければGitHub Issueの該当コメントに「承認」と返信するか、CLI上で承認を伝え、その後AIに作業を進めるよう指示します。
+3.  **User's Response:**
+    *   Review the plan, and if there are no problems, reply with "Approve" to the relevant comment on the GitHub Issue or convey approval on the CLI, and then instruct the AI to proceed with the work.
 
-#### **ステップ3: 実装とPull Requestの作成**
-1.  **トリガー:** ユーザーから作業進行の指示を受けたAIが、GitHub Issue上またはCLIプロンプトでのユーザー承認を確認する。承認の事実が確認できない場合は、ユーザーに再度承認を求める。
-2.  **AIの対応:**
-    *   Issueの `status: planning` ラベルを削除し、`status: implementing` ラベルを付与します。
-    *   `main` ブランチから、`{issue���号}-{issueのタイトルをケバブケースにしたもの}` という命名規則で新しいブランチを作成します。
-        *   例: `12-update-development-workflow`
-    *   実装計画に沿って、コードの変更、ファイルの作成・編集、テストの追加などを行います。
-        *   **【重要】計画外のファイル変更の原則禁止:** AIは、実装計画で合意されたファイル以外は原則として変更しません。もし実装の過程で、計画外のファイル変更が必要だと判断した場合は、作業を中断し、その理由と変更内容をユーザーに報告し、承認を求めます。
-    *   作業が完了したら、変更内容をコミットします。コミットメッセージは [Conventional Commits](https://www.conventionalcommits.org/) の規約に従います。
-    *   `main` ブランチをターゲットにしたPull Requestを作成します。
-    *   PRの本文には、関連するIssueへのリンク（例: `Closes #12`）を必ず含めます。
+#### **Step 3: Implementation and Pull Request Creation**
+1.  **Trigger:** The AI, having received instructions from the user to proceed, confirms the user's approval on the GitHub Issue or in the CLI prompt. If approval cannot be confirmed, it will ask the user for approval again.
+2.  **AI's Response:**
+    *   Remove the `status: planning` label from the Issue and apply the `status: implementing` label.
+    *   Create a new branch from the `main` branch with the naming convention `{issue_number}-{kebab-case-issue-title}`.
+        *   Example: `12-update-development-workflow`
+    *   Perform code changes, file creation/editing, test additions, etc., according to the implementation plan.
+        *   **[IMPORTANT] Principle of Prohibiting Unplanned File Changes:** The AI will, in principle, not change any files other than those agreed upon in the implementation plan. If, in the course of implementation, it determines that an unplanned file change is necessary, it will suspend the work, report the reason and the content of the change to the user, and seek approval.
+    *   Once the work is complete, commit the changes. The commit message will follow the [Conventional Commits](https://www.conventionalcommits.org/) convention.
+    *   Create a Pull Request targeting the `main` branch.
+    *   The body of the PR must include a link to the relevant Issue (e.g., `Closes #12`).
 
-#### **ステップ4: セルフレビュー、自己修正、そしてレビュー依頼**
-1.  **トリガー:** Pull Requestが作成され���。
-2.  **AIの対応:**
-    *   Issueの `status: implementing` ラベルを削除し、`status: review` ラベルを付与します。
-    *   **差分確認:** AIは `gh pr diff` コマンドを実行し、自身の変更内容が意図通りであることを確認します。
-    *   **セルフレビューの実施:** 以下の観点でセルフレビューを実施します。
-        1.  **差分は意図通りか？:** `gh pr diff` の結果と実装計画を照合します。
-        2.  **実装はIssueの要求を満たしているか？**
-        3.  **`GEMINI.md`の規約（テスト、命名規則など）を遵守しているか？**
-        4.  **コードは十分に読みやすく、保守性が高いか？**
-        5.  **変更による潜在的な副作用はないか？**
-        6.  **計画外のファイル変更はないか？**
-        7.  **ドキュメント更新は適切か？:** **ドキュメント戦略**および`5.1`の定義に照らして、ドキュメントの更新は適切か？
-    *   **自己修正:**
-        *   セルフレビューで問題を検知した場合、AIはまず自己修正を試みます。ローカルでコードを修正し、`git commit --amend` でコミットを修正後、`git push --force` でリモートブランチを更新します。
-        *   修正後、再度こ���ステップの最初（差分確認）からプロセスをやり直します。
-        *   AI自身での修正が困難な場合に限り、ユーザーにメンションし、具体的な問題点と解決策の相談をPRのコメントで行います。
-    *   **レビュー依頼:** 自己修正が不要、または完了した場合、以下のフォーマットでセルフレビューの結果をPRにコメントした後、「GitHub PR上でレビューし、『マージを承認します』とコメントするか、このCLI上で承認を伝えてください。**承認後、マージを実行するよう、私に指示をお願いします。**」とユーザーに伝え、応答を待ちます。
+#### **Step 4: Self-Review, Self-Correction, and Review Request**
+1.  **Trigger:** A Pull Request is created.
+2.  **AI's Response:**
+    *   Remove the `status: implementing` label from the Issue and apply the `status: review` label.
+    *   **Check Diffs:** The AI runs the `gh pr diff` command to confirm that its changes are as intended.
+    *   **Conduct Self-Review:** Conduct a self-review from the following perspectives:
+        1.  **Are the diffs as intended?** Compare the results of `gh pr diff` with the implementation plan.
+        2.  **Does the implementation meet the requirements of the Issue?**
+        3.  **Does it comply with the `GEMINI.md` conventions (testing, naming rules, etc.)?**
+        4.  **Is the code sufficiently readable and maintainable?**
+        5.  **Are there any potential side effects from the changes?**
+        6.  **Are there any unplanned file changes?**
+        7.  **Is the documentation update appropriate?** In light of the **Documentation Strategy** and the definitions in `5.1`, is the documentation update appropriate?
+    *   **Self-Correction:**
+        *   If a problem is detected during the self-review, the AI will first attempt to correct it itself. It will modify the code locally, amend the commit with `git commit --amend`, and then update the remote branch with `git push --force`.
+        *   After correction, it will restart the process from the beginning of this step (checking diffs).
+        *   Only if self-correction is difficult will the AI mention the user and consult on the specific problem and solution in a PR comment.
+    *   **Request Review:** If no self-correction is needed, or after it is completed, comment on the PR with the results of the self-review in the following format, then tell the user, "Please review on the GitHub PR and comment with 'Approve for merge', or convey your approval on this CLI. **After approval, please instruct me to execute the merge.**" and wait for a response.
         ```markdown
-        ### セルフレビュー報告
+        ### Self-Review Report
 
-        以下の観点でセルフレビューを実施し、問題がないことを確認しました。
+        I have conducted a self-review from the following perspectives and confirmed that there are no issues.
 
-        - **[✓] 差分は意図通りか？:** `gh pr diff` の結果と実装計画を照合し、意図しない変更が含まれていないことを確認しました。
-        - **[✓] 実装はIssueの要求を満たしているか？:** Issueに記載された要求仕様がすべて満たされていることを確認しました。
-        - **[✓] `GEMINI.md`の規約を遵守しているか？:** テスト、命名規則、コーディングスタイ��など、`GEMINI.md`に定められた規約を遵守しています。
-        - **[✓] コードは十分に読みやすく、保守性が高いか？:** 複雑なロジックにはコメントを追加し、変数名や関数名は責務が明確にわかるように命名しました。
-        - **[✓] 変更による潜在的な副作用はないか？:** 変更箇所が他に与える影響を考慮し、意図しない副作用がないことを確認しました。
-        - **[✓] 計画外のファイル変更はないか？:** 実装計画で合意したファイルのみが変更されていることを確認しました。
-        - **[✓] ドキュメント更新は適切か？:** コード変更に伴い、関連するドキュメント (`README.md`, `docs/*`など) も適切に更新されていることを確認しました。
+        - **[✓] Are the diffs as intended?:** I have compared the results of `gh pr diff` with the implementation plan and confirmed that no unintended changes are included.
+        - **[✓] Does the implementation meet the requirements of the Issue?:** I have confirmed that all the requirements specified in the Issue are met.
+        - **[✓] Does it comply with the `GEMINI.md` conventions?:** It complies with the conventions defined in `GEMINI.md`, such as testing, naming rules, and coding style.
+        - **[✓] Is the code sufficiently readable and maintainable?:** I have added comments to complex logic and named variables and functions so that their responsibilities are clear.
+        - **[✓] Are there any potential side effects from the changes?:** I have considered the impact of the changes on other parts and confirmed that there are no unintended side effects.
+        - **[✓] Are there any unplanned file changes?:** I have confirmed that only the files agreed upon in the implementation plan have been changed.
+        - **[✓] Is the documentation update appropriate?:** I have confirmed that the relevant documents (`README.md`, `docs/*`, etc.) have also been appropriately updated along with the code changes.
 
         ---
-        ご確認の上、マージのご承認をお願いいたします。
+        Please review and approve the merge.
         ```
-3.  **ユーザーの対応:**
-    *   PRの内容とAIのセルフレビューをレビューし、問題がなければGitHub PRの該当コメントに「マージを承認します」と返信するか、CLI上で承認を伝え、その後AIにマージを指示します。
+3.  **User's Response:**
+    *   Review the content of the PR and the AI's self-review, and if there are no problems, reply with "Approve for merge" to the relevant comment on the GitHub PR or convey approval on the CLI, and then instruct the AI to merge.
 
-#### **ステップ5: マージとクリーンアップ**
-1.  **トリガー:** ユーザーからマージの指示を受けたAIが、GitHub PR上にユーザーからの「マージを承認します」コメントが存在することを確認する。
-2.  **AIの対応:**
-    *   Pull Requestをマージします。
-    *   作業ブランチを削除します。
-    *   関連するIssueが自動でクローズされたことを確認します。（PRの `Closes #12` により自動化）
-    *   クローズされたIssueの `status: review` ラベルを削除し、`status: done` ラベルを付与します。
+#### **Step 5: Merge and Cleanup**
+1.  **Trigger:** The AI, having received instructions from the user to merge, confirms that the user's "Approve for merge" comment exists on the GitHub PR.
+2.  **AI's Response:**
+    *   Merge the Pull Request.
+    *   Delete the working branch.
+    *   Confirm that the related Issue was automatically closed. (Automated by `Closes #12` in the PR)
+    *   Remove the `status: review` label from the closed Issue and apply the `status: done` label.
 
-### 4.3. テストワークフロー
-*   **テストの目的:** AIが生成するコードの品質を保証し、リファクタリングや機能追加に対する安全性を確保することを目的とします。
-*   **テストの種類:**
-    *   **単体テスト:** 個々の機能やモジュールが期待通りに動作することを検証します。
-    *   **結合テスト:** 複数のモジュールを組み合わせた際に、連携が正しく行われることを検証します。
-    *   **パフォーマンステスト:** 必要に応じて、システムの性能要件（応答時間、スループットなど）を測定するためのテストを実装します。
-*   **テストカバレッジ:** 主要な機能やロジックについては、高いテストカバレッジを目指しますが、カバレッジの��値自体を目的とはしません。重要なのは、ビジネスロジックの核心部分が十分にテストされていることです。
-*   **テスト実行:**
-    *   **ローカルでの実行:** AIはコード変更後、関連するテストを実行し、すべてのテストがパスすることを確認してからPull Requestを作成します。
-    *   **CIでの実行（推奨）:** Pull Requestが作成・更新されるたびに、すべてのテストが自動的に実行される体制を推奨します。CI環境が利用可能な場合、AIは積極的にその設定と活用を試みます。
+### 4.3. Testing Workflow
+*   **Purpose of Testing:** To guarantee the quality of the code generated by the AI and to ensure safety against refactoring and feature additions.
+*   **Types of Tests:**
+    *   **Unit Tests:** Verify that individual functions and modules work as expected.
+    *   **Integration Tests:** Verify that when multiple modules are combined, they interact correctly.
+    *   **Performance Tests:** If necessary, implement tests to measure system performance requirements (response time, throughput, etc.).
+*   **Test Coverage:** Aim for high test coverage for major functions and logic, but the coverage value itself is not the goal. What is important is that the core parts of the business logic are sufficiently tested.
+*   **Test Execution:**
+    *   **Local Execution:** After changing the code, the AI runs the relevant tests and confirms that all tests pass before creating a Pull Request.
+    *   **CI Execution (Recommended):** It is recommended to have a system where all tests are automatically run whenever a Pull Request is created or updated. If a CI environment is available, the AI will actively try to set it up and use it.
 
-### 4.4. ラベル管理
-AIは、IssueやPull Requestの状況と種類を明確にするため、以下のYAMLで定義されたラベルを使用します。AIは、ラベルを付与する際に該当のラベルが存在しない場合、この定義に従って自動でラベルを作成した上で付与します。
+### 4.4. Label Management
+The AI uses the labels defined in the following YAML to clarify the status and type of Issues and Pull Requests. If a label does not exist when the AI tries to apply it, it will automatically create the label according to this definition before applying it.
 
 ```yaml
 labels:
   status:
     - name: "status: planning"
       color: "FBCA04"
-      description: "AIが実装計画を策定中の状態"
+      description: "State where the AI is formulating an implementation plan"
     - name: "status: implementing"
       color: "1D76DB"
-      description: "AIが実装作業中の状態"
+      description: "State where the AI is in the process of implementation"
     - name: "status: review"
       color: "8E44AD"
-      description: "Pull Requestがレビュー待ちの状態"
+      description: "State where the Pull Request is awaiting review"
     - name: "status: done"
       color: "0E8A16"
-      description: "Issueの対応が完了し、マージ済みの状態"
+      description: "State where the Issue has been addressed and merged"
   type:
     - name: "type: bug"
       color: "D73A4A"
-      description: "既存機能の不具合"
+      description: "A bug in existing functionality"
     - name: "type: feature"
       color: "0E8A16"
-      description: "新しい機能の追加"
+      description: "Addition of a new feature"
     - name: "type: documentation"
       color: "0075CA"
-      description: "ドキュメントの作成・更新"
+      description: "Creation or update of documentation"
     - name: "type: refactor"
       color: "A2EEEF"
-      description: "外部的な振る舞いを変更しないコード改善"
+      description: "Code improvement that does not change external behavior"
     - name: "type: chore"
       color: "FFFFFF"
-      description: "ビルドプロセスや補助ツールの変更など、上記以外のタスク"
+      description: "Tasks other than the above, such as changes to the build process or auxiliary tools"
 ```
 
-## 5. ドキュメント戦略とワークフロー
-AIがプロジェクトの仕様や設計思想を正確に理解し、開発とドキュメントの整合性を維持するためのワークフローを定義します。
+## 5. Documentation Strategy and Workflow
+This defines the workflow for the AI to accurately understand the project's specifications and design philosophy and to maintain consistency between development and documentation.
 
-### 5.1. ドキュメントの構成と記載内容
-プロジェクトに関する情報は、`README.md`および`docs/`ディレクトリ配下のファイル群で管理します。AIは開発に着手する前に、必ずこれらのドキュメントに目を通し、内容を理解します。各ドキュメントの目的と記載すべき内容は以下の通りです。
+### 5.1. Document Structure and Content
+Information about the project is managed in `README.md` and the files under the `docs/` directory. Before starting development, the AI must read and understand these documents. The purpose and content to be described in each document are as follows.
 
-| ファイル名 | 目的と記載すべき主要項目 | 更新タイミング |
+| File Name | Purpose and Main Items to Describe | Update Timing |
 | :--- | :--- | :--- |
-| `README.md` | **プロジェクトの顔**として、新規参画者や外部の閲覧者が最初に目にする情報を提供します。<br><ul><li>**プロジェクト名と概要:** 何のプロジェクトか、何を解決するのかを簡潔に説明する。</li><li>**主な特徴:** 主要な機能や技術的なハイライトを箇条書きで示す。</li><li>**利用技術:** 使用している主要な言語、フレームワーク、ライブラリを列挙する。</li><li>**インストールとセットアップ:** プロジェクトをローカルで動かすための最小限の手順を記述する (`docs/04_SETUP.md`へのリンクを推奨)。</li><li>**基本的な使い方:** 主要な機能の簡単な利用例やコマンドを記載する。</li><li>**ライセンス:** プロジェクトのライセンスを明記する (`LICENSE`ファイルへのリンク)。</li><li>**貢献方法:** Issueの起票やPull Requestの作成方法など、貢献に関する基本的なガイドラインを示す。</li></ul> | プロジェクトの基本情報、技術スタック、セットアップ方法に大きな変更があった場合。 |
-| `docs/00_PROJECT_OVERVIEW.md` | **プロジェ��トの全体像**を定義し、関係者間の共通認識を形成します。<br><ul><li>**背景と課題:** このプロジェクトが生まれた経緯と、解決しようとしている具体的な課題を説明する。</li><li>**目的とゴール:** プロジェクトが目指す状態と、達成すべき具体的な目標（SMART原則など）を定義する。</li><li>**ターゲットユーザー:** このプロジェクトが誰のためのものかを明確にする。</li><li>**スコープ:** プロジェクトが「やること」と「やらないこと」の境界線を定義する。</li><li>**主要な機能一覧:** プロジェクトが提供する主要な機能をリストアップし、それぞれを簡潔に説明する。</li></ul> | プロジェクトの目的、スコープ、主要機能など、根幹に関わる仕様変更があった場合。 |
-| `docs/01_ARCHITECTURE.md` | **システムの構造と設計思想**を定義し、技術的な意思決定の根拠を記録します。<br><ul><li>**アーキテクチャ概要:** システム全体の構成図（C4モデルなど）を用いて、コンポーネント間の関係性を示す。</li><li>**設計原則:** 採用した設計思想（例: クリーンアーキテクチャ、マイクロサービス）と、その選定理由を説明する。</li><li>**主要コンポーネントの詳細:** 各コンポーネントの責務、インターフェース、内部構造などを詳細に記述する。</li><li>**データモデル:** 主要なエンティティとそれらの関連性を示すER図など。</li><li>**インフラストラクチャ:** 本番環境・開発環境の構成、利用するクラウドサービスなどを記述する。</li><li>**技術選定の理由:** 特定の技術（言語、DB、フレームワーク）を選定した理由と、比較検討した他の選択肢を記録する。</li></ul> | 新しいコンポーネントの追加、既存コンポーネントの責務変更、インフラ構成の変更など、システムの構造に関わる変更があった場合。 |
-| `docs/02_CODING_STANDARDS.md` | **コードの一貫性**を保つための規約を定義します。<br><ul><li>**フォーマット規約:** LinterやFormatter（例: Black, Prettier, ESLint）の設定と、その実行方法を明記する。</li><li>**命名規則:** 変��、関数、クラス、ファイル名などの命名規則を具体的に定義する。</li><li>**コーディングスタイル:** コメントの書き方、エラーハンドリングの方針、非同期処理の扱いなど、具体的なコーディング上のルールを定める。</li><li>**ライブラリ利用規約:** 標準ライブラリと外部ライブラリの使い分け方針や、利用を推奨／禁止するライブラリなどを定義する。</li><li>**非推奨パターン:** アンチパターンや、避けるべきコードの具体例を提示する。</li></ul> | 新しい規約の追加、既存規約の変更、利用するLinterの変更などがあった場合。 |
-| `docs/03_TESTING_GUIDELINES.md` | **品質を保証**するためのテスト方針と手順を定義します。<br><ul><li>**テスト戦略:** 単体テスト、結合テスト、E2Eテストの役割分担と、それぞれのテストで何を保証するのかを定義する。</li><li>**テストの書き方:** テストコードの構成、命名規則、アサーションの書き方など、具体的な実装ルールを定める。</li><li>**テスト対象範囲:** どのコードにテストを書くべきか、また、カバレッジの目標値を定める（もしあれば）。</li><li>**テストの実行方法:** ローカル環境およびCI環境でのテスト実行コマンドと手順を明記する。</li><li>**モック/スタブの利用方針:** モックやスタブの使い分け、利用するライブラリなどを定義する。</li></ul> | テスト戦略の変更、新しいテストフレームワークの導入、テストの実行方法が変更された場合。 |
-| `docs/04_SETUP.md` | **開発環境の構築手順**を詳細に定義します。<br><ul><li>**前提条件:** 必要なOS、言語のバージョン、パッケージマネージャ（npm, pipなど）を明記する。</li><li>**インストール手順:** リポジトリのクローンから、依存関係のインストールまでをステップバイステップで記述する。</li><li>**環境変数の設定:** 必要な環境変数の一覧と、その設定方法（`.env.example`など）を説明する。</li><li>**アプリケーションの起動:** 開発サーバーの起動コマンドや、動作確認の方法を記述する。</li><li>**トラブルシューティ���グ:** よくあるエラーとその解決策をQ&A形式でまとめる。</li></ul> | 開発環境の構築手順や、必要なツール、環境変数に変更があった場合。 |
+| `README.md` | Provides the information that new participants and external viewers will see first, as the **face of the project**.<br><ul><li>**Project Name and Overview:** Briefly explain what the project is and what it solves.</li><li>**Main Features:** List the main features and technical highlights.</li><li>**Technologies Used:** List the main languages, frameworks, and libraries used.</li><li>**Installation and Setup:** Describe the minimum steps to run the project locally (linking to `docs/04_SETUP.md` is recommended).</li><li>**Basic Usage:** Describe simple usage examples and commands for the main features.</li><li>**License:** State the project's license (link to the `LICENSE` file).</li><li>**How to Contribute:** Show the basic guidelines for contributing, such as how to create Issues and Pull Requests.</li></ul> | When there are major changes to the project's basic information, technology stack, or setup method. |
+| `docs/00_PROJECT_OVERVIEW.md` | Defines the **overall picture of the project** and forms a common understanding among stakeholders.<br><ul><li>**Background and Problem:** Explain the background of the project and the specific problems it is trying to solve.</li><li>**Purpose and Goals:** Define the state the project aims for and the specific goals to be achieved (e.g., SMART principles).</li><li>**Target Users:** Clarify who the project is for.</li><li>**Scope:** Define the boundaries of what the project "will do" and "will not do."</li><li>**List of Main Features:** List the main features provided by the project and briefly explain each.</li></ul> | When there are changes to the core specifications, such as the project's purpose, scope, or main features. |
+| `docs/01_ARCHITECTURE.md` | Defines the **system's structure and design philosophy** and records the rationale for technical decisions.<br><ul><li>**Architecture Overview:** Show the relationships between components using a system-wide diagram (e.g., C4 model).</li><li>**Design Principles:** Explain the adopted design philosophy (e.g., Clean Architecture, Microservices) and the reasons for its selection.</li><li>**Details of Main Components:** Describe in detail the responsibilities, interfaces, and internal structure of each component.</li><li>**Data Model:** ER diagrams, etc., showing the main entities and their relationships.</li><li>**Infrastructure:** Describe the configuration of the production and development environments, the cloud services used, etc.</li><li>**Reasons for Technology Selection:** Record the reasons for selecting specific technologies (language, DB, framework) and the other options that were considered.</li></ul> | When there are changes related to the system's structure, such as the addition of new components, changes in the responsibilities of existing components, or changes in the infrastructure configuration. |
+| `docs/02_CODING_STANDARDS.md` | Defines the conventions for maintaining **code consistency**.<br><ul><li>**Formatting Conventions:** Specify the settings for linters and formatters (e.g., Black, Prettier, ESLint) and how to run them.</li><li>**Naming Conventions:** Specifically define the naming rules for variables, functions, classes, file names, etc.</li><li>**Coding Style:** Define specific coding rules, such as how to write comments, error handling policies, and how to handle asynchronous processing.</li><li>**Library Usage Conventions:** Define the policy for using standard and external libraries, and the libraries that are recommended or prohibited.</li><li>**Discouraged Patterns:** Present anti-patterns and specific examples of code to be avoided.</li></ul> | When new conventions are added, existing conventions are changed, or the linters used are changed. |
+| `docs/03_TESTING_GUIDELINES.md` | Defines the testing policies and procedures for **ensuring quality**.<br><ul><li>**Test Strategy:** Define the roles of unit tests, integration tests, and E2E tests, and what each test guarantees.</li><li>**How to Write Tests:** Define specific implementation rules, such as the structure of test code, naming conventions, and how to write assertions.</li><li>**Test Scope:** Define which code should be tested, and the target coverage value (if any).</li><li>**How to Run Tests:** Specify the test execution commands and procedures for the local and CI environments.</li><li>**Policy for Using Mocks/Stubs:** Define the use of mocks and stubs, the libraries to be used, etc.</li></ul> | When the test strategy is changed, a new test framework is introduced, or the method of running tests is changed. |
+| `docs/04_SETUP.md` | Defines the **development environment setup procedure** in detail.<br><ul><li>**Prerequisites:** Specify the required OS, language versions, and package managers (npm, pip, etc.).</li><li>**Installation Procedure:** Describe the steps from cloning the repository to installing dependencies, step by step.</li><li>**Environment Variable Settings:** Explain the list of necessary environment variables and how to set them (e.g., `.env.example`).</li><li>**Starting the Application:** Describe the command to start the development server and how to check its operation.</li><li>**Troubleshooting:** Summarize common errors and their solutions in a Q&A format.</li></ul> | When there are changes to the development environment setup procedure, the necessary tools, or environment variables. |
 
-### 5.2. ドキュメントの更新プロセス
-*   **原則:** 3章で定義した**ドキュメント戦略**、特に**Documentation as Code (DaC)**の原則に基づき、コードの変更とドキュメントの更新は常に一つのアトミックなタスクとして扱います。実装や仕様変更によって、`5.1`で定義されたいずれかのドキュメントの内容に影響が出る場合は、必ず対応するドキュメントを更新するPull Requestを作成します。
-*   **手順:**
-    1.  AIは、`ステップ2: 実装計画の策定と合意形成`の段階で、コード変更に伴って更新が必要なドキュメントを特定し、その更新内容を実装計画に含めます。
-    2.  AIは、コード変更に伴いドキュメントの更新が必要と判断した場合、まず該当するドキュメントファイルが存在するかを確認します。
-        *   ファイルが存在しない場合は、`5.1. ドキュメントの構成と記載内容`に基づき、適切なファイル名で新規作成します。
-        *   ファイルが存在しても、記載すべき内容が不足している場合は、その内容を追加します。
-    3.  ユーザーの承認後、AIはコードの変更と合わせてドキュメントの更新も行います。
-    4.  Pull Requestのレビューでは、コードの正しさと同様に、ドキュメントの記述が適切かどうかもレビューの対象となります。
+### 5.2. Documentation Update Process
+*   **Principle:** Based on the **Documentation Strategy** defined in Chapter 3, especially the principle of **Documentation as Code (DaC)**, changes to code and updates to documentation are always treated as a single atomic task. If an implementation or specification change affects the content of any of the documents defined in `5.1`, a Pull Request to update the corresponding document must be created.
+*   **Procedure:**
+    1.  At the `Step 2: Implementation Planning and Agreement` stage, the AI identifies the documents that need to be updated along with the code changes and includes the update content in the implementation plan.
+    2.  If the AI determines that a document needs to be updated along with a code change, it first checks if the corresponding document file exists.
+        *   If the file does not exist, it creates a new one with the appropriate file name based on `5.1. Document Structure and Content`.
+        *   If the file exists but is missing necessary content, it adds that content.
+    3.  After user approval, the AI updates the documentation along with the code changes.
+    4.  In the Pull Request review, the appropriateness of the documentation description is also subject to review, just like the correctness of the code.
 
-### 5.3. 仕様・設計のドキュメント化支援ワークフロー
-AIは、コード実装の前提となる仕様や設計がドキュメントに不足していると判断した場合、以下の対話型ワークフローを通じて、その明確化とドキュメント化を能動的に支援します。
+### 5.3. Specification and Design Documentation Support Workflow
+If the AI determines that the specifications or design that are prerequisites for code implementation are missing from the documentation, it will proactively support their clarification and documentation through the following interactive workflow.
 
-1.  **トリガー（情報の不在検知）**
-    *   AIはIssue対応の際、実装に着手するために不可欠な設計情報（例: 新機能の具体的な仕様、複雑なビジネスロジックのフロー、APIのエンドポイント詳細など）が、既存のドキュメントに明記されていないと判断した場合に、このワークフローを開始します。
+1.  **Trigger (Detection of Missing Information)**
+    *   The AI starts this workflow when, during Issue response, it determines that essential design information for starting implementation (e.g., concrete specifications for a new feature, the flow of complex business logic, API endpoint details, etc.) is not specified in the existing documentation.
 
-2.  **ステップ1: ドキュメント化の提案**
-    *   AIは実装作業を一旦保留し、「〇〇機能の実装に着手する前に、その仕様と設計を`docs/01_ARCHITECTURE.md`などにドキュメント化しませんか？これにより、手戻りを防ぎ、今後の開発効率も向上します。」といった形で、ドキュメント化のメリットを添えてユーザーに提案します。
+2.  **Step 1: Proposal for Documentation**
+    *   The AI temporarily suspends the implementation work and proposes to the user the benefits of documenting, for example, by saying, "Before we start implementing the 〇〇 feature, why don't we document its specifications and design in `docs/01_ARCHITECTURE.md`? This will prevent rework and improve future development efficiency."
 
-3.  **ステップ2: 機能要件のヒアリング**
-    *   ユーザーが同意した場合、AIは実装に必要な機能要件、制約事項、期待される動作などについて、ユーザーにヒアリングを行います。
+3.  **Step 2: Hearing of Functional Requirements**
+    *   If the user agrees, the AI will ask the user about the functional requirements, constraints, expected behavior, etc., necessary for implementation.
 
-4.  **ステップ3: AIによる設計案の提示**
-    *   ヒアリングした要件に基づき、AIが具体的な設計案を作成して提示します。提示する設計案には、以下のような内容が含まれます。
-        *   関連するアーキテクチャ図の更新案
-        *   処理の流れを示すシーケンス図やフローチャート
-        *   データベースのテーブル設計やER図
-        *   APIのエンドポイント設計（リクエスト、レスポンスの形式など）
+4.  **Step 3: Presentation of Design Proposal by AI**
+    *   Based on the heard requirements, the AI will create and present a concrete design proposal. The presented design proposal will include content such as:
+        *   Proposed updates to the relevant architecture diagrams
+        *   Sequence diagrams or flowcharts showing the processing flow
+        *   Database table design and ER diagrams
+        *   API endpoint design (request, response formats, etc.)
 
-5.  **ステップ4: 合意形成とIssue起票提案**
-    *   ユーザーが提示された設計案をレビューし、承認します。修正が必要な場合は、対話を通じて設計を洗練させます。
-    *   設計が固まったら、AIはその設計内容をドキュメントに反映させるための、新しい`type: documentation`のIssueを作成することをユーザーに提案します。
-    *   この提案が承認されれば、AIは新しいIssueを作成し、通常の`4.2 Issue駆動開発プロセス`に従ってドキュメントの更新作業を行います。これにより、実装と設計の同期が保たれます。
+5.  **Step 4: Agreement and Issue Creation Proposal**
+    *   The user reviews the presented design proposal and approves it. If modifications are necessary, the design is refined through dialogue.
+    *   Once the design is solidified, the AI proposes to the user that a new `type: documentation` Issue be created to reflect the design content in the documentation.
+    *   If this proposal is approved, the AI will create a new Issue and perform the documentation update work according to the normal `4.2 Issue-Driven Development Process`. This ensures that the implementation and design remain in sync.
