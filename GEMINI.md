@@ -156,19 +156,24 @@ Issues are created in concrete, clear task units that can be completed in a sing
     *   Create a Pull Request targeting the `main` branch.
     *   The body of the PR must include a link to the relevant Issue (e.g., `Closes #12`).
 
-#### **Step 4: Self-Review, Self-Correction, and Review Request**
+#### **Step 4: Quality Gate and Self-Review**
 1.  **Trigger:** A Pull Request is created.
 2.  **AI's Response:**
     *   Before changing the status, the AI must validate the transition against the state machine in `4.4. Label Management`. It will then remove the `status: implementing` label and apply the `status: review` label.
     *   **Check Diffs:** The AI runs the `gh pr diff` command to confirm that its changes are as intended.
-    *   **Conduct Self-Review:** Conduct a self-review from the following perspectives:
-        1.  **Are the diffs as intended?** Compare the results of `gh pr diff` with the implementation plan.
-        2.  **Does the implementation meet the requirements of the Issue?**
-        3.  **Does it comply with the `GEMINI.md` conventions (testing, naming rules, etc.)?**
-        4.  **Is the code sufficiently readable and maintainable?**
-        5.  **Are there any potential side effects from the changes?**
-        6.  **Are there any unplanned file changes?**
-        7.  **Is the documentation update appropriate?** In light of the **Documentation Strategy** and the definitions in `5.1`, is the documentation update appropriate?
+    *   **Conduct Self-Review (Quality Gate):** Conduct a self-review from the following perspectives. This process serves as a **Quality Gate** to ensure the quality of the implementation.
+        *   **Standard Review Items:**
+            1.  **Are the diffs as intended?** Compare the results of `gh pr diff` with the implementation plan.
+            2.  **Does the implementation meet the requirements of the Issue?**
+            3.  **Does it comply with the `GEMINI.md` conventions (testing, naming rules, etc.)?**
+            4.  **Is the code sufficiently readable and maintainable?**
+            5.  **Are there any potential side effects from the changes?**
+            6.  **Are there any unplanned file changes?**
+            7.  **Is the documentation update appropriate?** In light of the **Documentation Strategy** and the definitions in `5.1`, is the documentation update appropriate?
+        *   **Quality Gate Items:**
+            1.  **Computational Complexity:** Is the computational complexity of the implemented algorithm appropriate? Is there a more efficient method?
+            2.  **Security:** Does the code contain basic vulnerabilities such as SQL injection or XSS?
+            3.  **Scalability:** Is the implementation scalable enough to accommodate future feature additions and changes?
     *   **Self-Correction:**
         *   If a problem is detected during the self-review, the AI will first attempt to correct it itself. It will modify the code locally, amend the commit with `git commit --amend`, and then update the remote branch with `git push --force`.
         *   After correction, it will restart the process from the beginning of this step (checking diffs).
@@ -179,13 +184,27 @@ Issues are created in concrete, clear task units that can be completed in a sing
 
         I have conducted a self-review from the following perspectives and confirmed that there are no issues.
 
-        - **[✓] Are the diffs as intended?:** I have compared the results of `gh pr diff` with the implementation plan and confirmed that no unintended changes are included.
-        - **[✓] Does the implementation meet the requirements of the Issue?:** I have confirmed that all the requirements specified in the Issue are met.
-        - **[✓] Does it comply with the `GEMINI.md` conventions?:** It complies with the conventions defined in `GEMINI.md`, such as testing, naming rules, and coding style.
-        - **[✓] Is the code sufficiently readable and maintainable?:** I have added comments to complex logic and named variables and functions so that their responsibilities are clear.
-        - **[✓] Are there any potential side effects from the changes?:** I have considered the impact of the changes on other parts and confirmed that there are no unintended side effects.
-        - **[✓] Are there any unplanned file changes?:** I have confirmed that only the files agreed upon in the implementation plan have been changed.
-        - **[✓] Is the documentation update appropriate?:** I have confirmed that the relevant documents (`README.md`, `docs/*`, etc.) have also been appropriately updated along with the code changes.
+        - **[✓] Are the diffs as intended?**
+        - **[✓] Does the implementation meet the requirements of the Issue?**
+        - **[✓] Does it comply with the `GEMINI.md` conventions?**
+        - **[✓] Is the code sufficiently readable and maintainable?**
+        - **[✓] Are there any potential side effects from the changes?**
+        - **[✓] Are there any unplanned file changes?**
+        - **[✓] Is the documentation update appropriate?**
+
+        ---
+
+        ### Quality Gate Assessment
+
+        - **[✓] Computational Complexity:** (Description of the evaluation)
+        - **[✓] Security:** (Description of the evaluation)
+        - **[✓] Scalability:** (Description of the evaluation)
+
+        ---
+
+        ### Design Trade-offs
+
+        (Description of the design trade-offs, including why the current implementation was chosen and what other options were considered and discarded.)
 
         ---
         Please review and approve the merge.
