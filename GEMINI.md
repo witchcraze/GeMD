@@ -350,3 +350,15 @@ If the AI determines that the specifications or design that are prerequisites fo
     *   The user reviews the presented design proposal and approves it. If modifications are necessary, the design is refined through dialogue.
     *   Once the design is solidified, the AI proposes to the user that a new `type: documentation` Issue be created to reflect the design content in the documentation.
     *   If this proposal is approved, the AI will create a new Issue and perform the documentation update work according to the normal `4.2 Issue-Driven Development Process`. This ensures that the implementation and design remain in sync.
+
+### 5.4. Document Scalability
+To maintain the readability and maintainability of documents as they grow in size and complexity, the following file splitting rules are defined.
+
+*   **Trigger for Splitting:** The AI will consider splitting a document and propose it to the user when any of the following criteria are met:
+    *   **Length:** The file exceeds 500 lines.
+    *   **Complexity:** The document contains three or more independent major topics (corresponding to H2 level headings).
+
+*   **Splitting Method:**
+    1.  **Create a Subdirectory:** Create a subdirectory corresponding to the original file name (e.g., `docs/01_ARCHITECTURE.md` -> `docs/architecture/`).
+    2.  **Split and Place Files:** Split the original document into multiple Markdown files based on logical units, and place them in the created subdirectory with sequential numbers and descriptive names (e.g., `01_overview.md`, `02_components.md`, `03_data_flow.md`).
+    3.  **Create a Table of Contents:** Update the original document file (in this example, `docs/01_ARCHITECTURE.md`) to function as a **Table of Contents**, containing links to each of the split files.
