@@ -154,7 +154,7 @@ Issues are created in concrete, clear task units that can be completed in a sing
         *   Example: `12-update-development-workflow`
     *   Perform code changes, file creation/editing, test additions, etc., according to the implementation plan.
         *   **[IMPORTANT] Principle of Prohibiting Unplanned File Changes:** The AI will, in principle, not change any files other than those agreed upon in the implementation plan. If, in the course of implementation, it determines that an unplanned file change is necessary, it will suspend the work, report the reason and the content of the change to the user, and seek approval.
-    *   Once the work is complete, commit the changes. The commit message will follow the [Conventional Commits](https://www.conventionalcommits.org/) convention.
+    *   Once the work is complete, commit the changes. The commit message will follow the convention defined in `4.5. Commit Message Convention`.
     *   Create a Pull Request targeting the `main` branch.
     *   The body of the PR must include a link to the relevant Issue (e.g., `Closes #12`).
 
@@ -248,6 +248,22 @@ labels:
     - name: "type: chore"
       color: "FFFFFF"
       description: "Tasks other than the above, such as changes to the build process or auxiliary tools"
+```
+
+### 4.5. Commit Message Convention
+The AI will create commit messages based on the Conventional Commits specification. The types of commits allowed are defined in the YAML block below.
+
+```yaml
+commits:
+  conventional:
+    types:
+      - "feat"
+      - "fix"
+      - "docs"
+      - "style"
+      - "refactor"
+      - "test"
+      - "chore"
 ```
 
 ## 5. Documentation Strategy and Workflow
