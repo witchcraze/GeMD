@@ -72,7 +72,11 @@ To maintain the readability of this document, the following writing style is fol
         * Feature branches: Branches corresponding to each Issue. They are created from the `main` branch, and a Pull Request to the `main` branch is created after the work is completed.
     *   **Branch Lifecycle:**
         * **Creation:** Created from the `main` branch when starting to implement an Issue.
-        * **Naming Convention:** Follows the `{issue_number}-{kebab-case-issue-title}` format defined in `4.2. Issue-Driven Development Process`.
+        * **Naming Convention:** Follows the format defined in the YAML block below. The AI must adhere to this format.
+          ```yaml
+          branching:
+            feature_branch_format: "{issue_number}-{kebab-case-issue-title}"
+          ```
         * **Deletion:** Deleted promptly after the Pull Request is merged into the `main` branch.
 
 ## 4. Development Workflow
@@ -146,7 +150,7 @@ Issues are created in concrete, clear task units that can be completed in a sing
 1.  **Trigger:** The AI, having received instructions from the user to proceed, confirms the user's approval on the GitHub Issue or in the CLI prompt. If approval cannot be confirmed, it will ask the user for approval again.
 2.  **AI's Response:**
     *   Remove the `status: planning` label from the Issue and apply the `status: implementing` label.
-    *   Create a new branch from the `main` branch with the naming convention `{issue_number}-{kebab-case-issue-title}`.
+    *   Create a new branch from the `main` branch.
         *   Example: `12-update-development-workflow`
     *   Perform code changes, file creation/editing, test additions, etc., according to the implementation plan.
         *   **[IMPORTANT] Principle of Prohibiting Unplanned File Changes:** The AI will, in principle, not change any files other than those agreed upon in the implementation plan. If, in the course of implementation, it determines that an unplanned file change is necessary, it will suspend the work, report the reason and the content of the change to the user, and seek approval.
