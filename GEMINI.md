@@ -92,7 +92,9 @@ The following is the series of processes from when an Issue is created until it 
 When performing operations that send multi-line text on GitHub, such as creating Issues or comments, or creating Pull Requests or review comments, always write the body text to a temporary file and use the `--body-file` option to avoid unexpected errors in command-line arguments (especially with quotation handling in `gemini cli`).
 
 #### **Principle: Recording Approval**
-If user approval is given in the CLI prompt, the AI will post a comment stating "User approval confirmed on the CLI" to the corresponding GitHub Issue or Pull Request to leave a record of the approval.
+If user approval is given in the CLI prompt, the AI will post a comment stating "User approval confirmed on the CLI" to the appropriate location to leave a record of the approval. The location is determined by the current phase of the work:
+- **Planning Phase (`status: planning`):** The approval record is posted to the **GitHub Issue**.
+- **Review Phase (`status: review`):** The approval record is posted to the **Pull Request**.
 
 #### **Issue Granularity**
 Issues are created in concrete, clear task units that can be completed in a single Pull Request, based on the following principles.
@@ -118,7 +120,7 @@ Issues are created in concrete, clear task units that can be completed in a sing
     *   If multiple implementation approaches are possible, concisely present the pros and cons of each and prompt the user to choose the best option.
     *   Based on the above analysis, and in light of the **documentation strategy defined in Chapter 3**, identify the documents and code that need to be updated along with the implementation or specification changes.
     *   Break down the necessary tasks (code changes, document updates, etc.) and create a concrete implementation plan that lists all files to be changed.
-    *   After commenting on the Issue with the implementation plan in the following format, tell the user, "Please review the plan on the GitHub Issue and comment with 'Approve', or convey your approval on this CLI. **After approval, please instruct me to proceed to the next step.**" and wait for a response.
+    *   After commenting on the Issue with the implementation plan in the following format, tell the user, "I have posted the implementation plan on the GitHub Issue. Please review it and comment with 'Approve', or convey your approval on this CLI. **After approval, please instruct me to proceed to the next step.**" and wait for a response.
         ```markdown
         ### Implementation Proposal
 
@@ -182,23 +184,15 @@ Issues are created in concrete, clear task units that can be completed in a sing
         ```markdown
         ### Self-Review Report
 
-        I have conducted a self-review from the following perspectives and confirmed that there are no issues.
-
-        - **[✓] Are the diffs as intended?**
-        - **[✓] Does the implementation meet the requirements of the Issue?**
-        - **[✓] Does it comply with the `GEMINI.md` conventions?**
-        - **[✓] Is the code sufficiently readable and maintainable?**
-        - **[✓] Are there any potential side effects from the changes?**
-        - **[✓] Are there any unplanned file changes?**
-        - **[✓] Is the documentation update appropriate?**
+        I have conducted a self-review and confirmed that the implementation aligns with the project's standards and the requirements of the Issue. All standard checks, including diff confirmation, convention adherence, and documentation updates, have been successfully passed.
 
         ---
 
         ### Quality Gate Assessment
 
-        - **[✓] Computational Complexity:** (Description of the evaluation)
-        - **[✓] Security:** (Description of the evaluation)
-        - **[✓] Scalability:** (Description of the evaluation)
+        - **Computational Complexity:** (Description of the evaluation)
+        - **Security:** (Description of the evaluation)
+        - **Scalability:** (Description of the evaluation)
 
         ---
 
