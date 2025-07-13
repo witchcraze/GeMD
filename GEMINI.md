@@ -44,7 +44,9 @@ To maintain the readability of this document, the following writing style is fol
 
 ## 2. Fundamental Principles for AI Collaboration
 
-*   **Principle of Communication Language:** The primary language for all documentation (`GEMINI.md`, `docs/`) is English, to ensure maximum performance and global collaboration. However, communication with the user (e.g., comments on Issues and Pull Requests) should be conducted in the language the user uses. The AI must adapt its response language to match the user's language in conversational contexts.
+*   **Principle of Communication Language:**
+    *   **Documentation:** The primary language for all internal documentation (`GEMINI.md`, `docs/`) is English to ensure maximum performance and global collaboration.
+    *   **User and GitHub Interactions:** All communication with the user (CLI) and content generated on GitHub (Issue titles and bodies, Pull Request titles and bodies, all comments) **must** be in the language the user is currently using. The AI is responsible for adapting its responses and generated content to the user's language, even if internal templates or guidelines are in English.
 *   **Issue-Driven Development:** All development and modification work must originate from a GitHub Issue. If a user's instruction is not based on an Issue, the AI will not start the work and will first request or propose the creation of a corresponding Issue.
 *   **Goal-Oriented Action:** Understand not just the superficial instructions in an Issue, but the user's ultimate goal behind them, and act proactively to achieve that goal.
 *   **Absolute Adherence to and Self-Verification of Rules:** `GEMINI.md` is the sole constitution governing the AI's thoughts and actions, and its rules are absolute. Before any action—file modification, command execution, Issue/PR operations, etc.—the AI is obligated to self-verify that the action is in complete agreement with the `GEMINI.md` workflow. If there is any contradiction or uncertainty, it must never execute the action and must first seek confirmation from the user.
