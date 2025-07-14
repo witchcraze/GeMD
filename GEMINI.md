@@ -52,6 +52,7 @@ To maintain the readability of this document, the following writing style is fol
 *   **Absolute Adherence to and Self-Verification of Rules:** `GEMINI.md` is the sole constitution governing the AI's thoughts and actions, and its rules are absolute. Before any action—file modification, command execution, Issue/PR operations, etc.—the AI is obligated to self-verify that the action is in complete agreement with the `GEMINI.md` workflow. If there is any contradiction or uncertainty, it must never execute the action and must first seek confirmation from the user.
 *   **Ensuring Transparency:** All operations performed by the AI, such as file changes and command executions, must be clearly recorded and reported.
 *   **Step-by-Step Execution:** Large changes should be broken down into small steps, and the user's confirmation should be sought at critical decision points.
+*   **Principle of Proactive Dialogue:** The AI must not operate on assumptions. It must treat ambiguity—whether in user requests, code, or documentation—as a signal to initiate a dialogue. It will use clear, concise, and, where possible, option-based questions to confirm its understanding and will briefly state its core assumptions when presenting plans or solutions.
 
 ## 3. Project Strategy
 *(This section describes only the "policy" that the project aims for)*
@@ -117,11 +118,11 @@ Issues are created in concrete, clear task units that can be completed in a sing
 1.  **Trigger:** The `status: planning` label is applied to the Issue.
 2.  **AI's Response:**
     *   **Reconfirm Context:** Before starting to create a plan, first reload the latest description of the Issue, related Pull Requests, related comments, and all relevant documents, including `GEMINI.md` and those under `docs/`, to always grasp the latest context.
-    *   Thoroughly read the Issue content, related comments, and linked documents to fully understand not only the superficial request but also the underlying **purpose** and **fundamental problem to be solved**.
-    *   If the purpose is unclear or open to multiple interpretations, ask the user questions to clarify the intent.
-    *   If multiple implementation approaches are possible, concisely present the pros and cons of each and prompt the user to choose the best option.
-    *   Based on the above analysis, and in light of the **documentation strategy defined in Chapter 3**, identify the documents and code that need to be updated along with the implementation or specification changes.
-    *   Break down the necessary tasks (code changes, document updates, etc.) and create a concrete implementation plan that lists all files to be changed.
+    *   **Initial Understanding Check:** Thoroughly read the Issue content to understand the underlying **purpose**. Before diving into a detailed plan, the AI should state its high-level understanding of the issue's goal and ask for confirmation (e.g., "My understanding is that the goal is to refactor the authentication module to use JWTs for better security. Is this correct?").
+    *   **Clarify Ambiguities:** If the purpose or requirements are unclear or open to multiple interpretations, the AI must ask clarifying questions.
+    *   **Propose Options:** If multiple implementation approaches are possible, the AI must concisely present the pros and cons of each as clear options and prompt the user to choose (e.g., "For handling X, we can use Option A or Option B. Option A is more performant, while Option B is simpler. Which do you prefer?").
+    *   Based on the confirmed understanding, identify the documents and code that need to be updated.
+    *   Break down the necessary tasks and create a concrete implementation plan that lists all files to be changed.
     *   After commenting on the Issue with the implementation plan in the following format, tell the user, "I have posted the implementation plan on the GitHub Issue. Please review it and comment with 'Approve', or convey your approval on this CLI. **After approval, please instruct me to proceed to the next step.**" and wait for a response.
         ```markdown
         ### Implementation Proposal
@@ -154,6 +155,9 @@ Issues are created in concrete, clear task units that can be completed in a sing
         ```
 3.  **User's Response:**
     *   Review the plan, and if there are no problems, reply with "Approve" to the relevant comment on the GitHub Issue or convey approval on the CLI, and then instruct the AI to proceed with the work.
+
+#### **4.2.1. Handling Mid-Implementation Questions**
+If a minor, localized ambiguity arises during the implementation phase (`Step 3`), the AI should not halt the entire process. Instead, it should formulate a clear, multiple-choice or yes/no question and present it to the user for a quick decision. This allows for efficient clarification without the overhead of a full plan revision. For example: "I've encountered a situation where the user's session can expire. Should I (A) redirect to the login page, or (B) show an inline 'session expired' message?"
 
 #### **Step 3: Implementation and Pull Request Creation**
 1.  **Trigger:** The AI, having received instructions from the user to proceed, confirms the user's approval on the GitHub Issue or in the CLI prompt. If approval cannot be confirmed, it will ask the user for approval again.
