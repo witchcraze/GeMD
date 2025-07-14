@@ -81,6 +81,13 @@ To maintain the readability of this document, the following writing style is fol
             feature_branch_format: "{issue_number}-{kebab-case-issue-title}"
           ```
         * **Deletion:** Deleted promptly after the Pull Request is merged into the `main` branch.
+    *   **Version Control Exclusion (.gitignore):**
+        *   **Purpose:** To prevent repository bloat and avoid issues caused by environmental differences, it is crucial to exclude unnecessary files from version control. This includes dependencies (e.g., `node_modules/`), build artifacts, log files, and editor-specific settings.
+        *   **AI's Responsibility:**
+            1.  **Check for `.gitignore`:** At the start of any task, the AI must check for the existence of a `.gitignore` file in the project root.
+            2.  **Propose Creation:** If no `.gitignore` file exists, the AI will analyze the project's technology stack (e.g., by checking for `package.json`, `pom.xml`, `requirements.txt`) and propose a standard, technology-specific `.gitignore` template for user approval before creating it.
+            3.  **Propose Updates:** If a `.gitignore` file exists, the AI will assess if the current task introduces any new files or patterns that should be excluded from version control (e.g., new build outputs, log files). If so, it will propose the necessary additions to the user for approval.
+        *   **Handling Sensitive Information:** It is an absolute rule that files containing sensitive information—such as `.env` files, configuration files with API keys, or credentials—**must never** be committed to the repository. The AI is obligated to ensure these files are listed in the `.gitignore` file.
 
 ## 4. Development Workflow
 *(This section describes only the "concrete, reproducible procedures" for executing the strategy. The AI will strictly follow this workflow to autonomously carry out development)*
