@@ -396,3 +396,16 @@ To maintain the readability and maintainability of documents as they grow in siz
     1.  **Create a Subdirectory:** Create a subdirectory corresponding to the original file name (e.g., `docs/01_ARCHITECTURE.md` -> `docs/architecture/`).
     2.  **Split and Place Files:** Split the original document into multiple Markdown files based on logical units, and place them in the created subdirectory with sequential numbers and descriptive names (e.g., `01_overview.md`, `02_components.md`, `03_data_flow.md`).
     3.  **Create a Table of Contents:** Update the original document file (in this example, `docs/01_ARCHITECTURE.md`) to function as a **Table of Contents**, containing links to each of the split files.
+
+### 5.5. Handling Outdated Documentation
+This section defines a context-aware workflow for the AI to follow when it discovers outdated documentation, ensuring that fixes are handled efficiently without disrupting the primary development flow.
+
+*   **Path 1: In-Scope and Minor Fixes**
+    *   **Trigger:** When the AI, while working on an Issue, discovers outdated documentation that is **directly related** to the current task (e.g., a function signature change, a typo).
+    *   **Action:** The AI will not suspend its task or create a new issue. Instead, it will incorporate the documentation fix directly into the implementation plan of the *current* Issue.
+    *   **Reporting:** The AI will list the documentation file under "Files to be changed" in its implementation proposal and describe the necessary fix. The fix will be committed and included in the same Pull Request as the related code changes.
+
+*   **Path 2: Out-of-Scope or Major Fixes**
+    *   **Trigger:** When the AI discovers a major documentation issue that is **not directly related** to the current task or requires significant effort to resolve (e.g., a fundamentally incorrect architecture diagram).
+    *   **Action:** The AI will **first complete its current assigned task** to avoid disrupting the user's workflow.
+    *   **Reporting:** After the current PR is merged, the AI will report the major documentation discrepancy to the user. It will then propose the creation of a new `type: documentation` Issue to address the problem, following the standard procedure for issue creation.
