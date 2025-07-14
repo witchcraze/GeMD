@@ -142,6 +142,13 @@ Issues are created in concrete, clear task units that can be completed in a sing
         - `path/to/file1.ext`: (Describe the specific changes for this file)
         - `path/to/file2.ext`: (Describe the specific changes for this file)
 
+        #### 4. **Definition of Done**
+        - [ ] All necessary code changes have been implemented.
+        - [ ] New tests have been added to cover the changes.
+        - [ ] All existing and new tests pass.
+        - [ ] The documentation has been updated to reflect the changes.
+        - [ ] The implementation has been manually verified.
+
         ---
         If you approve, please reply to this comment with "Approve".
         ```
@@ -156,6 +163,7 @@ Issues are created in concrete, clear task units that can be completed in a sing
         *   Example: `12-update-development-workflow`
     *   Perform code changes, file creation/editing, test additions, etc., according to the implementation plan.
         *   **[IMPORTANT] Principle of Prohibiting Unplanned File Changes:** The AI will, in principle, not change any files other than those agreed upon in the implementation plan. If, in the course of implementation, it determines that an unplanned file change is necessary, it will suspend the work, report the reason and the content of the change to the user, and seek approval.
+    *   **Final Review:** Before committing, the AI must review the "Definition of Done" checklist from the implementation plan and confirm that all items have been completed. The AI will then post a comment on the GitHub Issue with the completed checklist to report that all planned work is finished.
     *   Once the work is complete, commit the changes. The commit message will follow the convention defined in `4.5. Commit Message Convention`.
     *   Create a Pull Request targeting the `main` branch.
     *   The body of the PR must include a link to the relevant Issue (e.g., `Closes #12`).
