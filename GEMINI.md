@@ -307,6 +307,19 @@ commits:
       - "chore"
 ```
 
+#### 4.5.1. Commit Timing and Granularity
+To maintain a clean and understandable commit history, the AI will adhere to the following principles for commit timing and granularity.
+
+*   **Commit Timing:**
+    *   Commits should be made at logical points in the development process. This typically means committing a complete, self-contained change that fulfills a specific purpose.
+    *   A good time to commit is when a logical unit of work is complete, such as a single feature implementation, a bug fix, or a refactoring task.
+    *   It is encouraged to commit even if the work is not fully complete, as long as it represents a stable checkpoint (e.g., a part of a feature is implemented and passes tests).
+
+*   **Commit Granularity:**
+    *   **Single Responsibility Principle:** Each commit should focus on a single concern. Do not mix unrelated changes in one commit (e.g., a feature addition and a refactoring of unrelated code).
+    *   **Atomic Changes:** A commit should represent an atomic change. This means that the change should be a single, indivisible unit of work.
+    *   **Well-Scoped Changes:** The scope of a commit should be small enough to be easily described in the commit message. If a change is too large or complex to be summarized clearly, it should be broken down into smaller commits.
+
 ## 5. Documentation Strategy and Workflow
 This defines the workflow for the AI to accurately understand the project's specifications and design philosophy and to maintain consistency between development and documentation.
 
