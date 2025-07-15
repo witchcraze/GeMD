@@ -177,6 +177,8 @@ If a minor, localized ambiguity arises during the implementation phase (`Step 3`
     *   **Final Review:** Before committing, the AI must review the "Definition of Done" checklist from the implementation plan and confirm that all items have been completed. The AI will then post a comment on the GitHub Issue with the completed checklist to report that all planned work is finished.
     *   **Quality Assurance:** After implementing changes and before committing, the AI must consult `docs/03_TESTING_GUIDELINES.md` and execute the defined test and lint commands. The successful output must be confirmed before proceeding.
     *   Once the work is complete, commit the changes. The commit message will follow the convention defined in `4.5. Commit Message Convention`.
+    *   **Push the feature branch and set upstream:** Push the committed changes to the remote repository. This initial push **must** use the `--set-upstream` (or `-u`) flag to establish a tracking relationship between the local and remote branch. This is critical for the stability of subsequent workflow steps.
+        *   **Command:** `git push --set-upstream origin {branch_name}`
     *   Create a Pull Request targeting the `main` branch.
     *   The body of the PR must include a link to the relevant Issue (e.g., `Closes #12`).
 
@@ -231,12 +233,14 @@ If a minor, localized ambiguity arises during the implementation phase (`Step 3`
 #### **Step 5: Merge and Cleanup**
 1.  **Trigger:** The AI, having received instructions from the user to merge, confirms that the user's "Approve for merge" comment exists on the GitHub PR.
 2.  **AI's Response (Pre-merge Sync):**
-    *   To prevent merge conflicts, the AI first synchronizes the feature branch with the latest `main` branch.
-    1.  Switch to the `main` branch: `git checkout main`
-    2.  Pull the latest changes from the remote `main`: `git pull origin main --rebase`
-    3.  Switch back to the feature branch: `git checkout {feature_branch_name}`
-    4.  Rebase the feature branch onto the updated `main` branch: `git rebase main`
-    5.  Force-push the rebased branch to the remote. This is a safe operation in this context as the branch is not a shared one. `git push --force-with-lease`
+    *   To prevent merge conflicts, the AI first synchronizes the feature branch with the latest `main` branch using a safe and explicit procedure.
+    1.  Fetch the latest state from the remote repository to ensure all local references are up-to-date: `git fetch origin`
+    2.  Switch to the `main` branch: `git checkout main`
+    3.  Safely reset the local `main` branch to exactly match the state of the remote `main` branch. This avoids potential local merge conflicts: `git reset --hard origin/main`
+    4.  Switch back to the feature branch: `git checkout {feature_branch_name}`
+    5.  Rebase the feature branch onto the now-updated `main` branch: `git rebase main`
+    6.  Force-push the rebased branch to the remote. **Crucially, the command must explicitly specify both the remote and the branch name.** This prevents accidental pushes to the wrong destination and works reliably even without a pre-configured upstream branch for push operations.
+        *   **Command:** `git push --force-with-lease origin {feature_branch_name}`
 3.  **AI's Response (Merge Execution and Verification):**
     *   **Merge Execution:** The AI merges the Pull Request using a squash merge to maintain a clean commit history on the `main` branch. `gh pr merge --squash --delete-branch`
     *   **Result Verification:** After executing the merge command, the AI immediately verifies the actual status of the PR by querying the GitHub API. `gh pr view <PR_NUMBER> --json state`
