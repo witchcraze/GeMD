@@ -245,7 +245,12 @@ If a minor, localized ambiguity arises during the implementation phase (`Step 3`
     *   **Merge Execution:** The AI merges the Pull Request using a squash merge to maintain a clean commit history on the `main` branch. `gh pr merge --squash --delete-branch`
     *   **Result Verification:** After executing the merge command, the AI immediately verifies the actual status of the PR by querying the GitHub API. `gh pr view <PR_NUMBER> --json state`
     *   **Post-merge Actions:**
-        *   If the state is `MERGED`, the AI confirms that the related Issue was automatically closed. It then validates the transition against the state machine in `4.4. Label Management`, removes the `status: review` label from the closed Issue, and applies the `status: done` label.
+        *   If the state is `MERGED`, the AI confirms that the related Issue was automatically closed. It then performs the final cleanup and status update:
+        1.  Switch back to the `main` branch to ensure a clean state for the next task.
+            *   **Command:** `git checkout main`
+        2.  Delete the now-merged local feature branch to maintain repository hygiene.
+            *   **Command:** `git branch -d {feature_branch_name}`
+        3.  Validate the transition against the state machine in `4.4. Label Management`, remove the `status: review` label from the closed Issue, and apply the `status: done` label.
         *   If the state is `OPEN` or `CLOSED` (but not merged), the AI reports the failure to the user, provides the error details, and asks for further instructions. It will not attempt to resolve the situation without user guidance.
 
 ### 4.3. Quality Assurance (QA) Workflow
