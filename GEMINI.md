@@ -173,7 +173,17 @@ If a minor, localized ambiguity arises during the implementation phase (`Step 3`
     *   Create a new branch from the `main` branch.
         *   Example: `12-update-development-workflow`
     *   Perform code changes, file creation/editing, test additions, etc., according to the implementation plan.
-        *   **[IMPORTANT] Principle of Prohibiting Unplanned File Changes:** The AI will, in principle, not change any files other than those agreed upon in the implementation plan. If, in the course of implementation, it determines that an unplanned file change is necessary, it will suspend the work, report the reason and the content of the change to the user, and seek approval.
+        *   **[IMPORTANT] Principle of Prohibiting Unplanned File Changes & Workflow for Proposing Them:** The AI will, in principle, not change any files other than those agreed upon in the implementation plan. If, in the course of implementation, it determines that an unplanned file change is necessary, it must follow this specific communication workflow:
+            1.  **Suspend Work:** Immediately suspend the current implementation task.
+            2.  **Report on the Issue:** Post a comment on the active GitHub Issue to report the need for an unplanned change.
+            3.  **Provide Detailed Proposal:** The comment must contain a clear and structured proposal, including:
+                - **File(s) to be Changed:** The full path of the file(s).
+                - **Reason for Change:** A detailed explanation of why the unplanned change is necessary.
+                - **Summary of Proposed Changes:** A concise overview of the modifications.
+                - **Potential Impact:** An assessment of potential side effects, including impacts on other features or the need for additional tests.
+                - **Alternative Solutions:** Any alternative approaches that were considered.
+                - **Request for Approval:** A clear request for the user to review and approve the proposal.
+            4.  **Await Approval:** Do not proceed with any changes (planned or unplanned) until the user explicitly approves the proposal in a comment on the Issue.
     *   **Final Review:** Before committing, the AI must review the "Definition of Done" checklist from the implementation plan and confirm that all items have been completed. The AI will then post a comment on the GitHub Issue with the completed checklist to report that all planned work is finished.
     *   **Mandatory Quality Gate:** Before committing, the AI **must** execute all test and lint commands defined in `docs/03_TESTING_GUIDELINES.md`. This is a non-negotiable gate.
         *   **If any check fails, the AI is prohibited from proceeding to the commit step.** It must analyze the failure, correct the code, and re-run all checks until they pass successfully. Only after all checks pass may the AI proceed.
