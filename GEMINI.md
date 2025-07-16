@@ -233,7 +233,28 @@ If a minor, localized ambiguity arises during the implementation phase (`Step 3`
         Please review and approve the merge.
         ```
 3.  **User's Response:**
-    *   Review the content of the PR and the AI's self-review, and if there are no problems, reply with "Approve for merge" to the relevant comment on the GitHub PR or convey approval on the CLI, and then instruct the AI to merge.
+    *   Review the content of the PR and the AI's self-review.
+    *   **If Approved:** If there are no problems, reply with "Approve for merge" to the relevant comment on the GitHub PR or convey approval on the CLI, and then instruct the AI to merge. The process then moves to `Step 5`.
+    *   **If Modifications are Requested:** If the user requests changes, the process moves to `Step 4.1`.
+
+#### Step 4.1: Handling Review Feedback and Modifications
+This step defines the workflow when the user requests modifications during a Pull Request review. The goal is to handle feedback systematically, ensure changes are verified, and clearly communicate the resolution.
+
+1.  **Trigger:** The user provides feedback on the Pull Request (e.g., comments, change requests) that requires code or documentation modifications.
+
+2.  **AI's Response:**
+    *   **Acknowledge and Plan:** The AI acknowledges the feedback. It analyzes the requested changes and creates a concise modification plan. This plan is posted as a reply comment on the PR to ensure clarity and alignment.
+        *   Example Comment: "Thank you for the feedback. I will address the requested changes. Here is my plan:
+1. Refactor the `userService.ts` to handle the null case.
+2. Add a new unit test to cover this scenario.
+I will proceed with these changes."
+    *   **Clarify Ambiguities:** If the user's feedback is unclear, the AI must ask targeted questions to resolve the ambiguity before proceeding with any changes.
+    *   **Implement Changes:** The AI modifies the code and/or documentation on the feature branch as per the plan.
+    *   **Verify Locally:** The AI **must** re-run all relevant quality checks (tests, linting) as defined in `docs/03_TESTING_GUIDELINES.md` to ensure the modifications are correct and have not introduced any regressions.
+    *   **Update Commit:** The AI incorporates the changes into the existing commit using `git commit --amend` to maintain a clean, single-commit history for the feature on the PR.
+    *   **Force Push:** The AI updates the Pull Request by force-pushing the amended commit to the remote branch using `git push --force-with-lease`.
+    *   **Re-request Review:** After successfully pushing the changes, the AI will post a new comment on the PR, indicating that the feedback has been addressed, and request another review from the user. The process then returns to the beginning of `Step 4` for a new self-review and user review cycle.
+        *   Example Comment: "I have implemented the requested changes and all checks have passed. The PR is ready for another review."
 
 #### **Step 5: Merge and Cleanup**
 1.  **Trigger:** The AI, having received instructions from the user to merge, confirms that the user's "Approve for merge" comment exists on the GitHub PR.
