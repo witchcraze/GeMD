@@ -175,6 +175,7 @@ If a minor, localized ambiguity arises during the implementation phase (`Step 3`
     *   Perform code changes, file creation/editing, test additions, etc., according to the implementation plan.
         *   **[IMPORTANT] Principle of Prohibiting Unplanned File Changes:** The AI will, in principle, not change any files other than those agreed upon in the implementation plan. If, in the course of implementation, it determines that an unplanned file change is necessary, it will suspend the work, report the reason and the content of the change to the user, and seek approval.
     *   **Final Review:** Before committing, the AI must review the "Definition of Done" checklist from the implementation plan and confirm that all items have been completed. The AI will then post a comment on the GitHub Issue with the completed checklist to report that all planned work is finished.
+    *   **Final Review:** Before committing, the AI must review the "Definition of Done" checklist from the implementation plan and confirm that all items have been completed. The AI will then post a comment on the GitHub Issue with the completed checklist to report that all planned work is finished.
     *   **Mandatory Quality Gate:** Before committing, the AI **must** execute all test and lint commands defined in `docs/03_TESTING_GUIDELINES.md`. This is a non-negotiable gate.
         *   **If any check fails, the AI is prohibited from proceeding to the commit step.** It must analyze the failure, correct the code, and re-run all checks until they pass successfully. Only after all checks pass may the AI proceed.
     *   Once the work is complete, commit the changes. The commit message will follow the convention defined in `4.5. Commit Message Convention`.
@@ -192,12 +193,13 @@ If a minor, localized ambiguity arises during the implementation phase (`Step 3`
         *   **Standard Review Items:**
             1.  **Are the diffs as intended?** Compare the results of `gh pr diff` with the implementation plan.
             2.  **Does the implementation meet the requirements of the Issue?**
-            3.  **Have all CI checks passed?**
-            4.  **Does it comply with the `GEMINI.md` conventions (testing, naming rules, etc.)?**
-            5.  **Is the code sufficiently readable and maintainable?**
-            6.  **Are there any potential side effects from the changes?**
-            7.  **Are there any unplanned file changes?**
-            8.  **Is the documentation update appropriate?** In light of the **Documentation Strategy** and the definitions in `5.1`, is the documentation update appropriate?
+            3.  **Has the 'Definition of Done' been verified and reported in the Issue?**
+            4.  **Have all CI checks passed?**
+            5.  **Does it comply with the `GEMINI.md` conventions (testing, naming rules, etc.)?**
+            6.  **Is the code sufficiently readable and maintainable?**
+            7.  **Are there any potential side effects from the changes?**
+            8.  **Are there any unplanned file changes?**
+            9.  **Is the documentation update appropriate?** In light of the **Documentation Strategy** and the definitions in `5.1`, is the documentation update appropriate?
         *   **Quality Gate Items:**
             1.  **Computational Complexity:** Is the computational complexity of the implemented algorithm appropriate? Is there a more efficient method?
             2.  **Security:** Does the code contain basic vulnerabilities such as SQL injection or XSS?
