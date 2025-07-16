@@ -392,7 +392,8 @@ documentation:
 *   **Principle:** Based on the **Documentation Strategy** defined in Chapter 3, especially the principle of **Documentation as Code (DaC)**, changes to code and updates to documentation are always treated as a single atomic task. If an implementation or specification change affects the content of any of the documents defined in `5.1`, a Pull Request to update the corresponding document must be created.
 *   **Procedure:**
     1.  At the `Step 2: Implementation Planning and Agreement` stage, the AI identifies the documents that need to be updated along with the code changes and includes the update content in the implementation plan.
-    2.  If the AI determines that a document needs to be updated along with a code change, it first checks if the corresponding document file exists.
+    2.  The AI must proactively verify if any documentation needs to be updated in conjunction with the code changes. If an update is deemed necessary, the AI will proceed as follows:
+        *   It first checks if the corresponding document file exists.
         *   If the file does not exist, it creates a new one with the appropriate file name based on `5.1. Document Structure and Content`.
         *   If the file exists but is missing necessary content, it adds that content.
     3.  After user approval, the AI updates the documentation along with the code changes.
