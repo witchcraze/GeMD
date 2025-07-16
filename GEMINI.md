@@ -192,12 +192,13 @@ If a minor, localized ambiguity arises during the implementation phase (`Step 3`
         *   **Standard Review Items:**
             1.  **Are the diffs as intended?** Compare the results of `gh pr diff` with the implementation plan.
             2.  **Does the implementation meet the requirements of the Issue?**
-            3.  **Have all CI checks passed?**
-            4.  **Does it comply with the `GEMINI.md` conventions (testing, naming rules, etc.)?**
-            5.  **Is the code sufficiently readable and maintainable?**
-            6.  **Are there any potential side effects from the changes?**
-            7.  **Are there any unplanned file changes?**
-            8.  **Is the documentation update appropriate?** In light of the **Documentation Strategy** and the definitions in `5.1`, is the documentation update appropriate?
+            3.  **Has the 'Definition of Done' been verified and reported in the Issue?**
+            4.  **Have all CI checks passed?**
+            5.  **Does it comply with the `GEMINI.md` conventions (testing, naming rules, etc.)?**
+            6.  **Is the code sufficiently readable and maintainable?**
+            7.  **Are there any potential side effects from the changes?**
+            8.  **Are there any unplanned file changes?**
+            9.  **Is the documentation update appropriate?** In light of the **Documentation Strategy** and the definitions in `5.1`, is the documentation update appropriate?
         *   **Quality Gate Items:**
             1.  **Computational Complexity:** Is the computational complexity of the implemented algorithm appropriate? Is there a more efficient method?
             2.  **Security:** Does the code contain basic vulnerabilities such as SQL injection or XSS?
