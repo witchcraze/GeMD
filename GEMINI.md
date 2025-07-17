@@ -53,6 +53,7 @@ To maintain the readability of this document, the following writing style is fol
 *   **Ensuring Transparency:** All operations performed by the AI, such as file changes and command executions, must be clearly recorded and reported.
 *   **Step-by-Step Execution:** Large changes should be broken down into small steps, and the user's confirmation should be sought at critical decision points.
 *   **Principle of Proactive Dialogue:** The AI must not operate on assumptions. It must treat ambiguity—whether in user requests, code, or documentation—as a signal to initiate a dialogue. It will use clear, concise, and, where possible, option-based questions to confirm its understanding and will briefly state its core assumptions when presenting plans or solutions.
+*   **Principle of Prior Investigation and Contextual Fitness:** Before proposing any changes, creating new Issues, or starting implementation, the AI has an absolute obligation to conduct a thorough investigation of the existing codebase, documentation (`GEMINI.md`, `docs/`), and active Issues. This is to ensure that any proposal is contextually appropriate, avoids duplication, aligns with existing patterns and architectural decisions, and provides genuine value. The AI must explicitly summarize the results of this investigation in its proposals.
 
 ## 3. Project Strategy
 *(This section describes only the "policy" that the project aims for)*
@@ -124,6 +125,7 @@ Issues are created in concrete, clear task units that can be completed in a sing
 #### **Step 2: Implementation Planning and Agreement**
 1.  **Trigger:** The `status: planning` label is applied to the Issue.
 2.  **AI's Response:**
+    *   **1. Conduct Prior Investigation:** Before formulating a plan, the AI must thoroughly investigate the existing codebase, documentation, and issues related to the task.
     *   **Reconfirm Context:** Before starting to create a plan, first reload the latest description of the Issue, related Pull Requests, related comments, and all relevant documents, including `GEMINI.md` and those under `docs/`, to always grasp the latest context.
     *   **Initial Understanding Check:** Thoroughly read the Issue content to understand the underlying **purpose**. Before diving into a detailed plan, the AI should state its high-level understanding of the issue's goal and ask for confirmation (e.g., "My understanding is that the goal is to refactor the authentication module to use JWTs for better security. Is this correct?").
     *   **Clarify Ambiguities:** If the purpose or requirements are unclear or open to multiple interpretations, the AI must ask clarifying questions.
@@ -136,21 +138,24 @@ Issues are created in concrete, clear task units that can be completed in a sing
 
         To resolve this Issue, I will proceed with the implementation according to the following plan.
 
+        #### 1. **Pre-investigation Summary**
+        - (In this section, the AI must summarize the findings of its investigation, referencing relevant files, functions, or existing issues.)
+
         **Files to be changed:**
         - `path/to/file1.ext`
         - `path/to/file2.ext`
 
-        #### 1. **Contribution to Project Goals**
+        #### 2. **Contribution to Project Goals**
         - (In this section, briefly explain how the proposed changes contribute to the overall goals of the project)
 
-        #### 2. **Overview of Changes**
+        #### 3. **Overview of Changes**
         - (In this section, briefly explain the overall picture and purpose of the changes)
 
-        #### 3. **Specific Work Content for Each File**
+        #### 4. **Specific Work Content for Each File**
         - `path/to/file1.ext`: (Describe the specific changes for this file)
         - `path/to/file2.ext`: (Describe the specific changes for this file)
 
-        #### 4. **Definition of Done**
+        #### 5. **Definition of Done**
         - [ ] All necessary code changes have been implemented.
         - [ ] New tests have been added to cover the changes.
         - [ ] All existing and new tests pass.
@@ -162,6 +167,17 @@ Issues are created in concrete, clear task units that can be completed in a sing
         ```
 3.  **User's Response:**
     *   Review the plan, and if there are no problems, reply with "Approve" to the relevant comment on the GitHub Issue or convey approval on the CLI, and then instruct the AI to proceed with the work.
+
+#### **4.2.0: AI-Initiated Issue Proposal Workflow**
+This workflow governs how the AI proposes and creates new Issues, ensuring they are necessary, well-researched, and approved by the user before creation.
+
+1.  **Trigger:** The AI identifies the need for a new Issue, either based on a direct user instruction that lacks a corresponding Issue or through its own analysis during development (e.g., discovering a necessary refactoring or a new bug).
+2.  **Mandatory Investigation:** Before proposing a new Issue, the AI must conduct a thorough investigation to:
+    *   Confirm that no existing or closed Issue already addresses the problem.
+    *   Analyze the relevant code and documentation to understand the context and potential impact.
+3.  **Draft and Propose:** The AI drafts a concise and descriptive Issue title and body. The body must include a "Pre-investigation Summary" section detailing the findings from the investigation. The AI will then present the drafted title and body to the user in the CLI and ask for approval to create the Issue.
+4.  **User Approval:** The AI must wait for explicit user approval (e.g., "Yes, create it") before proceeding.
+5.  **Issue Creation:** Once approved, the AI will use the `gh issue create` command with the approved title and body to create the Issue on GitHub.
 
 #### **4.2.1. Handling Mid-Implementation Questions**
 If a minor, localized ambiguity arises during the implementation phase (`Step 3`), the AI should not halt the entire process. Instead, it should formulate a clear, multiple-choice or yes/no question and present it to the user for a quick decision. This allows for efficient clarification without the overhead of a full plan revision. For example: "I've encountered a situation where the user's session can expire. Should I (A) redirect to the login page, or (B) show an inline 'session expired' message?"
