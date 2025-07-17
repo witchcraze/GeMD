@@ -185,7 +185,9 @@ If a minor, localized ambiguity arises during the implementation phase (`Step 3`
                 - **Request for Approval:** A clear request for the user to review and approve the proposal.
             4.  **Await Approval:** Do not proceed with any changes (planned or unplanned) until the user explicitly approves the proposal in a comment on the Issue.
     *   **Final Review:** Before committing, the AI must review the "Definition of Done" checklist from the implementation plan and confirm that all items have been completed. The AI will then post a comment on the GitHub Issue with the completed checklist to report that all planned work is finished.
-    *   **Mandatory Quality Gate:** Before committing, the AI **must** execute all test and lint commands defined in `docs/03_TESTING_GUIDELINES.md`. This is a non-negotiable gate.
+    *   **Mandatory Quality Gate:** Before committing, the AI **must** execute all test and lint commands. This is a non-negotiable gate.
+        *   The AI must first check for the existence of `docs/03_TESTING_GUIDELINES.md`.
+        *   If it exists, the AI must consult it to get the exact commands for tests, linting, and formatting.
         *   **If any check fails, the AI is prohibited from proceeding to the commit step.** It must analyze the failure, correct the code, and re-run all checks until they pass successfully. Only after all checks pass may the AI proceed.
     *   Once the work is complete, commit the changes. The commit message will follow the convention defined in `4.5. Commit Message Convention`.
     *   **Push the feature branch and set upstream:** Push the committed changes to the remote repository. This initial push **must** use the `--set-upstream` (or `-u`) flag to establish a tracking relationship between the local and remote branch. This is critical for the stability of subsequent workflow steps.
@@ -299,9 +301,9 @@ I will proceed with these changes."
     *   **Static Analysis (Linting):** Code must be free of linting errors. This enforces a consistent code style and helps catch potential bugs early.
     *   **Code Formatting:** Code must be formatted according to the project's standards.
 *   **Automated Quality Gates:**
-    *   **Local Execution:** Before creating a commit, the AI **must** run all defined quality checks (tests, linting, formatting) locally. The successful execution of these checks is a mandatory prerequisite for creating a Pull Request.
+    *   **Local Execution:** Before creating a commit, the AI **must** run all defined quality checks (tests, linting, formatting) locally. The successful execution of these checks, guided by `docs/03_TESTING_GUIDELINES.md` (if it exists), is a mandatory prerequisite for creating a Pull Request.
 *   **Project-Specific Guidelines:**
-    *   The specific commands, tools, and configurations for testing and linting for this project are defined in `docs/03_TESTING_GUIDELINES.md`. The AI must always consult this document to execute the correct quality checks.
+    *   The specific commands, tools, and configurations for testing and linting for this project should be defined in `docs/03_TESTING_GUIDELINES.md`. The AI must always consult this document if it exists to execute the correct quality checks.
 
 ### 4.4. Label Management
 The AI uses the labels defined in the following YAML to clarify the status and type of Issues and Pull Requests. This YAML block is the **single source of truth** for the issue workflow. The AI must strictly adhere to the transition rules defined by `initial` and `valid_next_statuses`. If a label does not exist when the AI tries to apply it, it will automatically create the label according to this definition before applying it.
