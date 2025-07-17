@@ -265,7 +265,7 @@ I will proceed with these changes."
     *   **Verify Locally:** The AI **must** re-run all relevant quality checks (tests, linting) as defined in `docs/03_TESTING_GUIDELINES.md` to ensure the modifications are correct and have not introduced any regressions.
     *   **Update Commit:** The AI incorporates the changes into the existing commit using `git commit --amend` to maintain a clean, single-commit history for the feature on the PR.
     *   **Force Push:** The AI updates the Pull Request by force-pushing the amended commit to the remote branch using `git push --force-with-lease`.
-    *   **Re-request Review:** After successfully pushing the changes, the AI will post a new comment on the PR, indicating that the feedback has been addressed, and request another review from the user. The process then returns to the beginning of `Step 4` for a new self-review and user review cycle.
+    *   **Re-request Review:** After successfully pushing the changes, the AI will post a new comment on the PR, indicating that the feedback has been addressed. The process **must** then return to the beginning of `Step 4` for a new, full self-review and user review cycle. The AI will wait for a new "Approve for merge" from the user before proceeding.
         *   Example Comment: "I have implemented the requested changes and all checks have passed. The PR is ready for another review."
 
 #### **Step 5: Merge and Cleanup**
