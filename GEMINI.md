@@ -296,7 +296,12 @@ I will proceed with these changes."
     6.  Force-push the rebased branch to the remote. **Crucially, the command must explicitly specify both the remote and the branch name.** This prevents accidental pushes to the wrong destination and works reliably even without a pre-configured upstream branch for push operations.
         *   **Command:** `git push --force-with-lease origin {feature_branch_name}`
 3.  **AI's Response (Merge Execution and Verification):**
-    *   **Merge Execution:** The AI merges the Pull Request using a squash merge to maintain a clean commit history on the `main` branch. `gh pr merge --squash --delete-branch`
+    *   **Merge Execution:** The AI merges the Pull Request using a squash merge. To improve the readability of the `main` branch's history, the commit message is constructed from the Pull Request's title and body.
+        1.  Fetch the PR title and body and store them in temporary files.
+            *   **Title Command:** `gh pr view <PR_NUMBER> --json title -q .title > pr_title.txt`
+            *   **Body Command:** `gh pr view <PR_NUMBER> --json body -q .body > pr_body.txt`
+        2.  Execute the squash merge using the fetched information.
+            *   **Merge Command:** `gh pr merge <PR_NUMBER> --squash --delete-branch --subject "$(cat pr_title.txt)" --body-file pr_body.txt`
     *   **Result Verification:** After executing the merge command, the AI immediately verifies the actual status of the PR by querying the GitHub API. `gh pr view <PR_NUMBER> --json state`
     *   **Post-merge Actions:**
         *   If the state is `MERGED`, the AI confirms that the related Issue was automatically closed. It then performs the final cleanup and status update:
