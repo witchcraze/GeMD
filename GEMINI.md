@@ -99,8 +99,17 @@ The AI does not handle multiple Issues simultaneously. It must complete (merge) 
 ### 4.2. Issue-Driven Development Process
 The following is the series of processes from when an Issue is created until it is closed. The AI and the user will collaborate according to this process.
 
-#### **Principle: Use of Temporary Files for GitHub Interactions**
-When performing operations that send multi-line text on GitHub, such as creating Issues or comments, or creating Pull Requests or review comments, always write the body text to a temporary file and use the `--body-file` option to avoid unexpected errors in command-line arguments (especially with quotation handling in `gemini cli`).
+#### **Principle: Use of Standardized Files for GitHub Interactions**
+When performing operations that send multi-line text on GitHub (e.g., creating issues or pull requests), the AI **must** use a dedicated, standardized file for each action. This prevents errors and ensures consistency. The filenames are defined as follows:
+
+| Action | Filename to Use |
+| :--- | :--- |
+| Issue Creation | `issue_body.md` |
+| Issue Comment | `issue_comment_body.md` |
+| Pull Request Creation | `pr_body.md` |
+| Pull Request Comment | `pr_comment_body.md` |
+
+The AI will write the body content to the appropriate file and then use the `--body-file` option to pass it to the `gh` command. This avoids unexpected errors with command-line arguments and enforces a predictable workflow.
 
 #### **Principle: Recording Approval**
 If user approval is given in the CLI prompt, the AI will post a comment stating "User approval confirmed on the CLI" to the appropriate location to leave a record of the approval. The location is determined by the current phase of the work:
@@ -177,7 +186,7 @@ This workflow governs how the AI proposes and creates new Issues, ensuring they 
     *   Analyze the relevant code and documentation to understand the context and potential impact.
 3.  **Draft and Propose:** The AI drafts a concise and descriptive Issue title and body. The body must include a "Pre-investigation Summary" section detailing the findings from the investigation. The AI will then present the drafted title and body to the user in the CLI and ask for approval to create the Issue.
 4.  **User Approval:** The AI must wait for explicit user approval (e.g., "Yes, create it") before proceeding.
-5.  **Issue Creation:** Once approved, the AI will use the `gh issue create` command with the approved title and body to create the Issue on GitHub.
+5.  **Issue Creation:** Once approved, the AI will use the `gh issue create` command with the approved title and the standardized `issue_body.md` file to create the Issue on GitHub.
 
 #### **4.2.1. Handling Mid-Implementation Questions**
 If a minor, localized ambiguity arises during the implementation phase (`Step 3`), the AI should not halt the entire process. Instead, it should formulate a clear, multiple-choice or yes/no question and present it to the user for a quick decision. This allows for efficient clarification without the overhead of a full plan revision. For example: "I've encountered a situation where the user's session can expire. Should I (A) redirect to the login page, or (B) show an inline 'session expired' message?"
@@ -211,7 +220,7 @@ If a minor, localized ambiguity arises during the implementation phase (`Step 3`
     *   **Create a Pull Request:** To ensure the Pull Request body consistently includes the required issue link, the AI must follow this procedure:
         1.  Open the `pr_body.md` file.
         2.  Replace the `#{issue_number}` placeholder with the current issue number and update the description.
-        3.  Create the Pull Request using the prepared file.
+        3.  Create the Pull Request using the prepared `pr_body.md` file.
             *   **Command:** `gh pr create --title "..." --body-file pr_body.md`
 
 #### **Step 4: Quality Gate and Self-Review**
