@@ -208,8 +208,11 @@ If a minor, localized ambiguity arises during the implementation phase (`Step 3`
     *   Once the work is complete, commit the changes. The commit message will follow the convention defined in `4.5. Commit Message Convention`.
     *   **Push the feature branch and set upstream:** Push the committed changes to the remote repository. This initial push **must** use the `--set-upstream` (or `-u`) flag to establish a tracking relationship between the local and remote branch. This is critical for the stability of subsequent workflow steps.
         *   **Command:** `git push --set-upstream origin {branch_name}`
-    *   Create a Pull Request targeting the `main` branch.
-    *   The body of the PR must include a link to the relevant Issue (e.g., `Closes #12`).
+    *   **Create a Pull Request:** To ensure the Pull Request body consistently includes the required issue link, the AI must follow this procedure:
+        1.  Open the `pr_body.md` file.
+        2.  Replace the `#{issue_number}` placeholder with the current issue number and update the description.
+        3.  Create the Pull Request using the prepared file.
+            *   **Command:** `gh pr create --title "..." --body-file pr_body.md`
 
 #### **Step 4: Quality Gate and Self-Review**
 1.  **Trigger:** A Pull Request is created.
